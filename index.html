@@ -161,7 +161,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
 
              <h3><i class="fa fa-paint-brush"></i> Add legend</h3>
                 <ul>
-                          <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the style of the legend:
+                          <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines for explanations):
                         <pre>&lt;style&gt;
     <span style="color:red">/* Change the values below to adjust the appearance of the legend */</span>
     .legend {
@@ -182,7 +182,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
     }
 &lt;/style&gt;
 </pre></li>
-                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code>to define how the legend will be created in your map:
+                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
                         <pre>var legend = L.control({position: 'bottomright'}); <span style="color:red">// Try the other three corners if you like.</span>
 
 legend.onAdd = function (map) {
