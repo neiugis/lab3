@@ -128,7 +128,8 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
 
               <h3><i class="fa fa-paint-brush"></i> Add colors</h3>
                   <ul>
-                        <li>Now, we will color the London Boroughs according to their population density. Remember the orignal shapefile contains three fields: NAME, pop_den, and per_indian. The population density data will come from the <code>pop_den</code>. For choosing colors, Leaflet recommends <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a>, where you can pick a color scheme and get the <a href="http://www.w3schools.com/html/html_colors.asp" target="_blank">HTML color codes</a> for the different colors. Let's use the 5-class Purples (For Question 2, you will use a different one):<br>
+                        <li>Now, we will color the London Boroughs according to their population density. Remember the orignal shapefile contains three fields: NAME, pop_den, and per_indian. The population density data will come from the <code>pop_den</code>. </li>
+                        <li>For choosing colors, Leaflet recommends <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a>, where you can pick a color scheme and get the <a href="http://www.w3schools.com/html/html_colors.asp" target="_blank">HTML color codes</a> for the different colors. Let's use the 5-class Purples (For Question 2, you will use a different one):<br>
                             <img src="img/green.png"></img></li>
                         <li>Once we have the color codes, we need to create a function that returns a color based on population density values. Place the following lines <b>above</b> the line of <code>L.geoJson</code>):
                             <pre>function getColor(<span style="color:#990099">value</span>) {
