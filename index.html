@@ -152,7 +152,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
         color: <span style="color:#cc6600">'gray'</span>,
         fillOpacity: <span style="color:blue">0.9</span>
     };
-}</pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. If other field is to be mapped, you will need to use the corresponding field name (for question 3).<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
+}</pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. If another field is to be mapped, you will need to use the corresponding field name (for question 3).<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
                         <li>To make the functions work, we have to <b>modify</b> the line of <code>L.geoJson</code> to:
                             <pre>L.geoJson(<span style="color:#990099">data</span>, {style:<span style="color:#990099">style</span>}).addTo(map);</pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
                         Now we have a map with colors (<a href="map/color.txt" target="_blank">sample code</a>) !
