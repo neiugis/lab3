@@ -188,7 +188,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'legend'),
-        grades = [<span style="color:blue">0, 32, 53, 87, 139</span>]; <span style="color:red">// The break values to define the intervals of population, note we begin from 0 here</span>
+        grades = [<span style="color:blue">0, 32, 53, 87, 139</span>]; <span style="color:red">// The <b>break values</b> to define the intervals of population, note we begin from 0 here</span>
 
     div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The legend title, in this case it's Population Density 2011</span>
 
@@ -221,7 +221,7 @@ legend.addTo(map);</pre>
                 <ul id="hw">
                   <li><b>Question 1:</b> Submit the html file you have just completed by following along the instructions (9 pts).</li>
                   <li><b>Question 2:</b> Save the html file as <code>color.html</code>. Modify the code to use a <b>different color scheme</b> (<i>Hint: You will need to modify the color code used in the <code>getColor</code> function</i>) (6 pts). </li>
-                  <li><b>Question 3:</b> Save the html file as <code>indian.html</code>. Modify the code to make another choropleth map with the <code>per_indian</code> (% Indian Population) field. For the break values, use <b>20, 15, 7.5, 3</b> (again, 5 classes) (<i>Hint: You will need to modify the break values used in the <code>getColor</code> function, then field name used for <code>fillColor</code> within the <code>style</code> function).</i> Please also remember to change the <b>legend</b> portion to reflect the percent Indian population data. ) (10 pts). </li>
+                  <li><b>Question 3:</b> Save the html file as <code>indian.html</code>. Modify the code to make another choropleth map with the <code>per_indian</code> (% Indian Population) field. For the break values, use <b>20, 15, 7.5, 3</b> (again, 5 classes) (<i>Hint: You will need to modify the break values used in the <code>getColor</code> function, then field name used for <code>fillColor</code> within the <code>style</code> function).</i> Please also remember to change the <b>legend</b> portion (break values and legend title, see the corresponding comment lines) to reflect the percent Indian population data. ) (10 pts). </li>
 
                 </ul><br>
                 </div>
