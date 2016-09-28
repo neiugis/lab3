@@ -146,7 +146,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
                         <li>Following the <code>getColor</code> function, we define another function for the GeoJSON layer so that its <code>fillColor</code> depends on <code>feature.properties.pop_den</code> property:
 <pre>function style(feature){
     return {
-        fillColor: getColor(feature.properties.<span style="color:#990099">pop_den</span>),   // pop_den is the field name for the population density data
+        fillColor: getColor(feature.properties.<span style="color:#990099">pop_den</span>),   <span style="color:red">// pop_den is the field name for the population density data</span>
         weight: <span style="color:blue">2</span>,
         opacity: <span style="color:blue">1</span>,
         color: <span style="color:#cc6600">'gray'</span>,
@@ -163,7 +163,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
                 <ul>
                           <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
                         <pre>&lt;style&gt;
-    <span style="color:red">/* Change the values below to adjust the appearance of the legend */</span>
+    <span style="color:red">/* Optional: adjust the values below to change the appearance of the legend */</span>
     .legend {
         padding: 6px 8px;
         line-height: 18px;
@@ -172,7 +172,7 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
         border-radius: 5px;
     }
 
-     <span style="color:red">/* Change the values below to adjust the appearance of the legend color boxes */</span>
+     <span style="color:red">/* Optional: adjust the values below to change the appearance of the legend color boxes */</span>
      .legend i {
         width: 18px;
         height: 18px;
