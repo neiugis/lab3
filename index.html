@@ -146,13 +146,13 @@ Yep, we will map London this time! You will get the London Boroughs shapefile be
                         <li>Following the <code>getColor</code> function, we define another function for the GeoJSON layer so that its <code>fillColor</code> depends on <code>feature.properties.pop_den</code> property:
 <pre>function style(feature){
     return {
-        fillColor: getColor(feature.properties.<span style="color:#990099">pop_den</span>),
+        fillColor: getColor(feature.properties.<span style="color:#990099">pop_den</span>),   // pop_den is the field name for the population density data
         weight: <span style="color:blue">2</span>,
         opacity: <span style="color:blue">1</span>,
         color: <span style="color:#cc6600">'gray'</span>,
         fillOpacity: <span style="color:blue">0.9</span>
     };
-}</pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. <br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
+}</pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. If other field is to be mapped, you will need to use the corresponding field name (for question 3).<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
                         <li>To make the functions work, we have to <b>modify</b> the line of <code>L.geoJson</code> to:
                             <pre>L.geoJson(<span style="color:#990099">data</span>, {style:<span style="color:#990099">style</span>}).addTo(map);</pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
                         Now we have a map with colors (<a href="map/color.txt" target="_blank">sample code</a>) !
@@ -190,7 +190,7 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend'),
         grades = [<span style="color:blue">0, 32, 53, 87, 139</span>]; <span style="color:red">// The <b>break values</b> to define the intervals of population, note we begin from 0 here</span>
 
-    div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The legend title, in this case it's Population Density 2011</span>
+    div.innerHTML = <span style="color:#cc6600">'&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'</span>; <span style="color:red">// The <b>legend title</b>, in this case it's Population Density 2011</span>
 
     <span style="color:red">// Loop through our the classes and generate a label with a colored square for each interval.
     // If you are creating a similar choropleth map, you do not need to change lines below. </span>
