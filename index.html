@@ -114,8 +114,6 @@
 
 
 
-
-
                 <p><a id="geojson" title="Prepare and Add GeoJSON Layer" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Prepare and Add GeoJSON Layer</h3>
                     <p>In Lab 2, we have introduced how to add markers to your map manually using their geographic coordinates. But you may wish to work with more complex spatial features as in a desktop GIS. So we introduce GeoJSON, which is a format for encoding a variety of geographic data structures (<a href="http://geojson.org" target="_blank">http://geojson.org</a>).</p>
@@ -124,34 +122,50 @@
                         <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com/file/d/0BzvZaHCgmEmNYWFmc2R4UHNHSzg/view?usp=sharing" target="_blank">here</a> to download the sample shapefile I used in this lab. </li>
                         <li>Extract the zipped data folder to your desired directory.</li>
 
-                            <li>Launch <strong>QGIS Desktop 2.14</strong> (available in both BBH 242 and BBH 252; It is open source and cross-platform so you can <a href="https://drive.google.com/drive/folders/1YEhhr2qYfemLSetO_del9WO55kxJhnLW?usp=sharing" target=_blank>download here</a> and install QGIS 2.14 on your own computer) and go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may look different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. The shapefile also contains three fields in their attribute table: <b>NAME, pop_den (population density 2011), and per_indian (percent Indian population 2011)</b>. You can take a look by right-clicking the layer name and select <b>Open Attribute Table</b>.</li>
+                            <li>Launch <strong>QGIS Desktop 2.14</strong> (available in both BBH 242 and BBH 252; It is open source and cross-platform so you can <a href="https://drive.google.com/drive/folders/1YEhhr2qYfemLSetO_del9WO55kxJhnLW?usp=sharing" target=_blank>download QGIS here</a> and install it on your own computer). </li>
 
-                              <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) simplify geometry; and (2) delete unwanted fields in the attribute table. For your convenience, I have already deleted the unrelevant fields. But you still need to simplify the geometry, please follow the step below: <br><br>
-                        &nbsp;In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify Geometries</b>, use london_borough as Input. For the Simplify tolerance, the unit is the same as the unit of the reference system (In our case, the unit is meter). Vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. Let's use <b>0.2</b> here (see image below).<br><br>
-  <center><img src="img/simplify.png" width=37% align="middle" ></center>
+                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may be different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
+
+                            <li>Right-click the layer name in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields in their attribute table: <b>NAME, pop_den (population density in <i>people per square mile</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
+
+                              <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) <span style="color:#C0392B; font-weight:bold">simplify geometry</span>; and (2) <span style="color:#C0392B  ; font-weight:bold">delete unwanted fields in the attribute table</span>. I will show you how to do so in the following steps: <br>
+                                <ul>
+                                    <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span>
+                                      <br>In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify Geometries</b>, use london_borough as Input (see image below).
+                                      <br>For the <b> Simplify tolerance</b>, the unit is the same as the map unit (meter in this case). You could find out the map unit of your own layer by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units (XXX). Basically, vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. I will use <b>0.2</b> here. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.
+                                      <center><img src="img/simplify.png" width=60% align="middle" ></center>
+                                      <br>Click <b>OK</b> to run. Once the process is complete, you will see a dialog window telling you how many vertices have been eliminated.
+                                      <br>Note your layer may be in editing mode with many red crosses shown at each vertex. You could get rid of them by clicking on the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">, and click <b>Save</b> in the pop-up dialog to confirm the changes we just made. </li>
+
+                                    <li><span style="color:#C0392B  ; font-weight:bold">Delete unwanted fields</span>
+                                    <br>You could delete fields of a layer with tools in its attribute table (right-click the layer in the Layes Panel and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the same pencil button. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
+                                    <br>Turn off the editing mode and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
+                                </ul>
+
                         </li>
-                        <li>Click OK to run. Once the process is complete, you will see a dialog window telling you how many vertices have been eliminated.</li>
-                        <li>Next, in the Layers panel of QGIS, right-click the layer and select <b>Save As...</b>. In the dialog window, set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and be sure to set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). Then click OK to save the GeoJSON file. Then close QGIS (no need to save anything).<br><br>
-                            <center><img src="img/qgis.png" width=80% ></center></li>
+
+
+                        <li>Now we are ready to export the layer. Right-click the layer in the Layes Panel and select <b>Save As...</b>. In the dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
+                            <center><img src="img/qgis.png" width=100% ></center></li>
+                            <li>Click OK to save the GeoJSON file. Then exit QGIS (no need to save anything).</li>
                         <li>Use <b>Atom</b> to open the GeoJSON file (similar to open an HTML document). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
                           <center>  <img src="img/geojson.png" width=80% ></center></li>
-                         <li>Save the changed GeoJSON as <code>data.js</code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
+                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we can use <code>data.js</code> for mapping:
                             <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
-                        <li>Then, in <code>script</code> section (inside <code>body</code>), include the following to add the data.
+                        <li>Then, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer).
                             <pre><code class="language-javascript">L.geoJson(data).addTo(map);</code></pre>
                         The GeoJSON data layer is now added to the map! Take a look at the <a href="map/geojsondata.txt" target="_blank">sample code</a> if needed.
                       <iframe src="map/geojsondata.html" height=570 width=100% frameborder=0></iframe></li>
                     </ul>
 
 
-                    
-                    
+
+
                   <p><a id="color" title="Add Colors" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Add Colors</h3>
-                    
                      <ul>
                         <li>Now, we will color the London Boroughs according to their population density. Remember the orignal shapefile contains three fields: NAME, pop_den, and per_indian. The population density data will come from the <code>pop_den</code>. </li>
                         <li>For choosing colors, Leaflet recommends <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a>, where you can pick a color scheme and get the <a href="http://www.w3schools.com/html/html_colors.asp" target="_blank">HTML color codes</a> for the different colors. Let's use the 5-class Purples (For Question 2, you will use a different one):<br>
@@ -185,12 +199,12 @@
                         <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
                     </ul>
 
-                    
-                    
-                    
+
+
+
                     <p><a id="legend" title="Add Legend" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
-                    
+
                     <ul>
                           <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
                         <pre><code class="language-css">&lt;style&gt;
@@ -224,7 +238,7 @@ legend.onAdd = function (map) {
     div.innerHTML = '&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'; // The legend title, in this case it's Population Density 2011
 
     // Loop through our the classes and generate a label with a colored square for each interval.
-    // If you are creating a similar choropleth map, you do not need to change lines below. 
+    // If you are creating a similar choropleth map, you do not need to change lines below.
     for (var i = 0; i &lt; grades.length; i++) {
         div.innerHTML +=
         '&lt;i style=&quot;background:' + getColor(grades[i] + 1) + '&quot;&gt;&lt;/i&gt;' +
@@ -243,10 +257,10 @@ legend.addTo(map);</code></pre>
 
                 </ul>
                 <br>
-                    
-                    
-                    
-                    
+
+
+
+
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
