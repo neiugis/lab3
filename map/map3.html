@@ -33,6 +33,14 @@
            accessToken: 'pk.eyJ1IjoiY3VyZW1hbmdvIiwiYSI6ImNpcTQ4cGFwbDAxbmVmd25vZGNiOTVzeGEifQ.GWZByYkIft6eMRha69C8nw'
          }).addTo(map);
 
+         function getColor(value) {
+            return value > 139 ? '#54278f':
+                   value > 87  ? '#756bb1':
+                   value > 53  ? '#9e9ac8':
+                   value > 32  ? '#cbc9e2':
+                                 '#f2f0f7';
+        }
+
          L.geoJson(data).addTo(map);
 
         </script>

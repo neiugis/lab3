@@ -126,7 +126,7 @@
 
                             <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may be different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
 
-                            <li>Right-click the layer name in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields in their attribute table: <b>NAME, pop_den (population density in <i>people per square mile</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
+                            <li>Right-click the layer name in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields in their attribute table: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
 
                               <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) <span style="color:#C0392B; font-weight:bold">simplify geometry</span>; and (2) <span style="color:#C0392B  ; font-weight:bold">delete unwanted fields in the attribute table</span>. I will show you how to do so in the following steps: <br>
                                 <ul>
@@ -147,7 +147,7 @@
 
                         <li>Now we are ready to export the layer. Right-click the layer in the Layes Panel and select <b>Save As...</b>. In the dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
                             <center><img src="img/qgis.png" width=100% ></center></li>
-                            <li>Click OK to save the GeoJSON file. Then exit QGIS (no need to save anything).</li>
+                            <li>Click OK to save the GeoJSON file. We will use QGIS to help classify the data values in the Add Colors step but you could exit QGIS if you are intended to work on that later.</li>
                         <li>Use <b>Atom</b> to open the GeoJSON file (similar to open an HTML document). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
                           <center>  <img src="img/geojson.png" width=80% ></center></li>
@@ -163,14 +163,13 @@
 
 
 
-
                   <p><a id="color" title="Add Colors" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Add Colors</h3>
                      <ul>
-                        <li>Now, we will color the London Boroughs according to their population density. Remember the orignal shapefile contains three fields: NAME, pop_den, and per_indian. The population density data will come from the <code>pop_den</code>. </li>
-                        <li>For choosing colors, Leaflet recommends <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a>, where you can pick a color scheme and get the <a href="http://www.w3schools.com/html/html_colors.asp" target="_blank">HTML color codes</a> for the different colors. Let's use the 5-class Purples (For Question 2, you will use a different one):<br>
+                        <li>Now, we will color the London Boroughs according to their population density values, e.g., darker color for higher density and lighter color for lower density. Recall the population density data will come from the <code>pop_den</code> attribute/property of the data. </li>
+                        <li>For choosing colors, I recommend <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a> by Dr. Cynthia Brewer, where you can pick a color scheme and get the correponing HTML color codes directly. I will use the 5-class Purples here:<br>
                             <img src="img/green.png"></li>
-                        <li>Once we have the color codes, we need to create a function that returns a color based on population density values. Place the following lines <b>above</b> the line of <code>L.geoJson</code>):
+                        <li>Once we have the color codes, we need to create a javascript function that returns a color based on attribute values, i.e., <code>pop_den</code>. Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
                             <pre><code class="language-javascript">function getColor(value) {
     return value > 139 ? '#54278f':
            value > 87  ? '#756bb1':
@@ -179,7 +178,8 @@
                          '#f2f0f7';
 }
 </code></pre>
-              In the above lines, the <span style="color:blue">blue colored numbers</span> are the <b>break values</b> that are used to classify the population density (in people/hectare) of the different London Boroughs. Try to classify your data in QGIS or ArcGIS may help determine the break values. Here, I used <code>Natural Breaks</code> as the classification method. You may have noticed the <span style="color:#cc6600">color codes</span> are used as well.
+              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London Boroughs. Spend some time here to read how the colors correspond to these values.
+              <br><br>For your own data, you may use QGIS to help determine the break values. Here, I used <code>Natural Breaks</code> as the classification method. 
               <br><br>
               Let's try to take a close look at the fuction: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this on Monday).
               <br><br>It is okay if you cannot fully understand this. If you use your own data, you will just need to replace the <b>break values</b> and <b>colors</b>. You can, of course, add or remove classes. Please follow the syntax carefully.</li>
