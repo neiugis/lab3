@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://guides.github.com/introduction/git-handbook/ -->
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+      <title>Lab 3 - Interactive Choropleth Map </title>
+      <!-- <link rel="icon" type="image/x-icon" href="https://guides.github.com/favicon.ico"> -->
+
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+      <link rel="icon" href="brazil.png" >
+
+      <link rel="stylesheet" href="gridism.css">
+      <link rel="stylesheet" href="markdown.css">
+      <link rel="stylesheet" href="octicons.css">
+      <link href="main.css" rel="stylesheet">
+      <link href="pygments.css" rel="stylesheet">
+
+      <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="prism.css" rel="stylesheet" />
+
+      <script type="text/javascript" async="" src="ga.js"></script><script src="jquery.js" type="text/javascript"></script>
+      <script src="snap.svg-min.js" type="text/javascript"></script>
+      <script src="application.js" type="text/javascript"></script>
+
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3769691-29']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+
+    </head>
+
+    <body style="background-color:#935116">
+
+        <article class="full">
+            <div class="article-heading js-article-heading js-geopattern" style="background-color:#935116">
+                <div class="wrap">
+                  <h1>Incomplete</h1>
+                  <!-- <h1>Lab 3 - Interactive Choropleth Map   <i class="fa fa-leaf"></i></h1> -->
+                  <p style="color:#FFC300"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 9/26</b></p>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="toc-wrapper"><ol class="toc js-toc sticky"></ol></div>
+
+                <div class="markdown-body content-body">
+
+
+                  <p><a id="overview" title="Overview" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Overview</h3>
+                  <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom.  </p>
+
+
+
+                  <p><a id="prep" title="Set Up Basemap" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Set Up Basemap</h3>
+                  <ul>
+                         <li>Before you start, create a <b>new file folder</b> (e.g., lab3) for this lab.</li>
+
+                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Mapbox light canvas.<br><br>
+                          <b>Note you will need to paste <code>your MapBox access token</code> for the <code>accessToken</code> option of L.tileLayer in order to use MapBox tile layers. </b>It is recommended to save your MapBox token to a file/app that you have easy access to as we may use their canvas background a lot in the future.<br>
+
+                               <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Lab 3&lt;/title&gt;
+
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.css&quot;
+        integrity=&quot;sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==&quot;
+        crossorigin=&quot;&quot;/&gt;
+
+        &lt;script src=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.js&quot;
+        integrity=&quot;sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==&quot;
+        crossorigin=&quot;&quot;&gt;&lt;/script&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id=&quot;map&quot; style=&quot;height: 500px&quot;&gt;&lt;/div&gt;
+
+        &lt;script type=&quot;text/javascript&quot;&gt;
+
+          var map = L.map('map', {
+              center: [51.48,-0.07],
+              zoom: 10
+          });
+
+         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+           maxZoom: 11,
+           minZoom: 5,
+           id: 'mapbox.light',
+           accessToken: 'your mapbox public access token'
+         }).addTo(map);
+
+        &lt;/script&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+           <li>Then, save the document as <code>map3.html</code> in your lab 3 folder. Please remember to specify the file extension as <b>.html</b> to make it work. Your map should look like:<br></li>
+
+            <iframe src="map/map3.html" width=100% height=520 frameborder=0></iframe><br>
+            <p>Yep, I will map London this time! </p>
+                       </ul>
+
+
+
+
+
+                <p><a id="geojson" title="Prepare and Add GeoJSON Layer" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Prepare and Add GeoJSON Layer</h3>
+                    <p>In Lab 2, we have introduced how to add markers to your map manually using their geographic coordinates. But you may wish to work with more complex spatial features as in a desktop GIS. So we introduce GeoJSON, which is a format for encoding a variety of geographic data structures (<a href="http://geojson.org" target="_blank">http://geojson.org</a>).</p>
+                     <ul>
+
+                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com/file/d/0BzvZaHCgmEmNYWFmc2R4UHNHSzg/view?usp=sharing" target="_blank">here</a> to download the sample shapefile I used in this lab. </li>
+                        <li>Extract the zipped data folder to your desired directory.</li>
+
+                            <li>Launch <strong>QGIS Desktop 2.14</strong> (available in both BBH 242 and BBH 252; It is open source and cross-platform so you can <a href="https://drive.google.com/drive/folders/1YEhhr2qYfemLSetO_del9WO55kxJhnLW?usp=sharing" target=_blank>download here</a> and install QGIS 2.14 on your own computer) and go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may look different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. The shapefile also contains three fields in their attribute table: <b>NAME, pop_den (population density 2011), and per_indian (percent Indian population 2011)</b>. You can take a look by right-clicking the layer name and select <b>Open Attribute Table</b>.</li>
+
+                              <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) simplify geometry; and (2) delete unwanted fields in the attribute table. For your convenience, I have already deleted the unrelevant fields. But you still need to simplify the geometry, please follow the step below: <br><br>
+                        &nbsp;In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify Geometries</b>, use london_borough as Input. For the Simplify tolerance, the unit is the same as the unit of the reference system (In our case, the unit is meter). Vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. Let's use <b>0.2</b> here (see image below).<br><br>
+  <center><img src="img/simplify.png" width=37% align="middle" ></center>
+                        </li>
+                        <li>Click OK to run. Once the process is complete, you will see a dialog window telling you how many vertices have been eliminated.</li>
+                        <li>Next, in the Layers panel of QGIS, right-click the layer and select <b>Save As...</b>. In the dialog window, set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and be sure to set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). Then click OK to save the GeoJSON file. Then close QGIS (no need to save anything).<br><br>
+                            <center><img src="img/qgis.png" width=80% ></center></li>
+                        <li>Use <b>Atom</b> to open the GeoJSON file (similar to open an HTML document). Place the following at the very beginning of the GeoJSON document (see image below):
+                            <pre><code class="language-javascript">var data = </code></pre>
+                          <center>  <img src="img/geojson.png" width=80% ></center></li>
+                         <li>Save the changed GeoJSON as <code>data.js</code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
+                             <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
+                        <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we can use <code>data.js</code> for mapping:
+                            <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
+                        <li>Then, in <code>script</code> section (inside <code>body</code>), include the following to add the data.
+                            <pre><code class="language-javascript">L.geoJson(data).addTo(map);</code></pre>
+                        The GeoJSON data layer is now added to the map! Take a look at the <a href="map/geojsondata.txt" target="_blank">sample code</a> if needed.
+                      <iframe src="map/geojsondata.html" height=570 width=100% frameborder=0></iframe></li>
+                    </ul>
+
+
+                    
+                    
+                  <p><a id="color" title="Add Colors" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Colors</h3>
+                    
+                     <ul>
+                        <li>Now, we will color the London Boroughs according to their population density. Remember the orignal shapefile contains three fields: NAME, pop_den, and per_indian. The population density data will come from the <code>pop_den</code>. </li>
+                        <li>For choosing colors, Leaflet recommends <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a>, where you can pick a color scheme and get the <a href="http://www.w3schools.com/html/html_colors.asp" target="_blank">HTML color codes</a> for the different colors. Let's use the 5-class Purples (For Question 2, you will use a different one):<br>
+                            <img src="img/green.png"></li>
+                        <li>Once we have the color codes, we need to create a function that returns a color based on population density values. Place the following lines <b>above</b> the line of <code>L.geoJson</code>):
+                            <pre><code class="language-javascript">function getColor(value) {
+    return value > 139 ? '#54278f':
+           value > 87  ? '#756bb1':
+           value > 53  ? '#9e9ac8':
+           value > 32  ? '#cbc9e2':
+                         '#f2f0f7';
+}
+</code></pre>
+              In the above lines, the <span style="color:blue">blue colored numbers</span> are the <b>break values</b> that are used to classify the population density (in people/hectare) of the different London Boroughs. Try to classify your data in QGIS or ArcGIS may help determine the break values. Here, I used <code>Natural Breaks</code> as the classification method. You may have noticed the <span style="color:#cc6600">color codes</span> are used as well.
+              <br><br>
+              Let's try to take a close look at the fuction: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this on Monday).
+              <br><br>It is okay if you cannot fully understand this. If you use your own data, you will just need to replace the <b>break values</b> and <b>colors</b>. You can, of course, add or remove classes. Please follow the syntax carefully.</li>
+                        <li>Following the <code>getColor</code> function, we define another function for the GeoJSON layer so that its <code>fillColor</code> depends on <code>feature.properties.pop_den</code> property:
+<pre><code class="language-javascript">function style(feature){
+    return {
+        fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: 'gray',
+        fillOpacity: 0.9
+    };
+}</code></pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. If another field is to be mapped, you will need to use the corresponding field name (for question 3).<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
+                        <li>To make the functions work, we have to <b>modify</b> the line of <code>L.geoJson</code> to:
+                            <pre><code class="language-javascript">L.geoJson(data, {style:style}).addTo(map);</code></pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
+                        Now we have a map with colors (<a href="map/color.txt" target="_blank">sample code</a>) !
+                        <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
+                    </ul>
+
+                    
+                    
+                    
+                    <p><a id="legend" title="Add Legend" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
+                    
+                    <ul>
+                          <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
+                        <pre><code class="language-css">&lt;style&gt;
+/* Optional: adjust the values below to change the appearance of the legend */
+.legend {
+    padding: 6px 8px;
+    line-height: 18px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+ /* Optional: adjust the values below to change the appearance of the legend color boxes */
+ .legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+&lt;/style&gt;</code>
+</pre></li>
+                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
+                        <pre><code class="language-javascript">var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'legend'),
+        grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = '&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'; // The legend title, in this case it's Population Density 2011
+
+    // Loop through our the classes and generate a label with a colored square for each interval.
+    // If you are creating a similar choropleth map, you do not need to change lines below. 
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        '&lt;i style=&quot;background:' + getColor(grades[i] + 1) + '&quot;&gt;&lt;/i&gt;' +
+        grades[i] + (grades[i + 1] ? '&amp;ndash;' + grades[i + 1] + '&lt;br&gt;' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);</code></pre>
+                        The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you answer question 3 or make your own maps.
+                        <br><br>
+                        The legend will be created at the bottom right corner of your map with the defined styles and content:
+                          <iframe src="map/map.html" width=95% height=570 frameborder=0></iframe>
+                    </li>
+
+                </ul>
+                <br>
+                    
+                    
+                    
+                    
+
+                  <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
+                    <ul><li>Find your own vector layer (polygons with attributes) and create an interactive choropleth map.
+                        </li>
+                        <li>Your final map will be graded based on its overall accuracy (should meet all the requirements above) and cartographic layout/design.</li>
+                        <li>Host your web page (Make sure to UPLOAD your geojson file to the repository and rename the html file as <code>index.html</code>!!!) and submit the url through D2L. </li></ul>
+
+            <br><br>
+            </div>
+            </div>
+        </article>
+
+          <footer>
+            <div class="wrap">
+
+              <p>Copyright &copy; Ting Liu 2018</p>
+            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+            </div>
+          </footer>
+
+            <script src="prism.js"></script>
+
+     </body>
+</html>
