@@ -126,8 +126,21 @@
 
                             <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may be different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
 
-                            <li>Right-click the layer name in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields in their attribute table: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
+                            <li>Right-click the layer in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields in their attribute table: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
 
+                              <li>Although we will be mapping the data on the web eventually, it is helpful to explore the data in QGIS to help determine the details for rendering the data on the web. Right-click the layer again and select <b>Properties</b>, then choose the <b>Style</b> tab (see image below).
+                                <ul>
+                                <li>Use <b>Graduated</b> Symbol to render the data (this option is used when making choropleth maps).</li>
+                                <li>For Column, choose the attribute you are intended to map, <code>pop_den</code> in my example.</li>
+                                <li>Under Classes, you could pick the mode of data classification (I used Natural Breaks) and number of classes (I used 5). Wondering what the different modes mean? Check out <a href="http://pro.arcgis.com/en/pro-app/help/mapping/layer-properties/data-classification-methods.htm" target="_blank">this link</a>.</li>
+                                  <center><img src="img/class.png" width=100% align="middle" ></center>
+                                <li>Click OK to apply the selected style. And you should see an example of the london boroughs map rendered as a choropleth map.</li>
+                              <center><img src="img/choropleth.png" width=100% align="middle" ></center>
+                            <li>Pay attention to the legend of the map, jot down the approximate break numbers, we will these values later when adding the data to the web. For example, I take notes of the integer values of <i>32, 53, 87, 139</i> for later use.</li> </ul>
+                              </li>
+
+
+                              <br>
                               <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) <span style="color:#C0392B; font-weight:bold">simplify geometry</span>; and (2) <span style="color:#C0392B  ; font-weight:bold">delete unwanted fields in the attribute table</span>. I will show you how to do so in the following steps: <br>
                                 <ul>
                                     <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span>
@@ -169,6 +182,7 @@
                         <li>Now, we will color the London Boroughs according to their population density values, e.g., darker color for higher density and lighter color for lower density. Recall the population density data will come from the <code>pop_den</code> attribute/property of the data. </li>
                         <li>For choosing colors, I recommend <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a> by Dr. Cynthia Brewer, where you can pick a color scheme and get the correponing HTML color codes directly. I will use the 5-class Purples here:<br>
                             <img src="img/green.png"></li>
+
                         <li>Once we have the color codes, we need to create a javascript function that returns a color based on attribute values, i.e., <code>pop_den</code>. Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
                             <pre><code class="language-javascript">function getColor(value) {
     return value > 139 ? '#54278f':
@@ -178,12 +192,15 @@
                          '#f2f0f7';
 }
 </code></pre>
-              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London Boroughs. Spend some time here to read how the colors correspond to these values.
-              <br><br>For your own data, you may use QGIS to help determine the break values. Here, I used <code>Natural Breaks</code> as the classification method. 
+              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London Boroughs. Recall that I used <code>Natural Breaks</code> as the classification mode and used <code>5 classes</code>.
+              <br><br>For your own data, you may use QGIS to help determine the break values.
               <br><br>
               Let's try to take a close look at the fuction: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this on Monday).
               <br><br>It is okay if you cannot fully understand this. If you use your own data, you will just need to replace the <b>break values</b> and <b>colors</b>. You can, of course, add or remove classes. Please follow the syntax carefully.</li>
-                        <li>Following the <code>getColor</code> function, we define another function for the GeoJSON layer so that its <code>fillColor</code> depends on <code>feature.properties.pop_den</code> property:
+
+              <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
+
+                        <li>Following the <code>getColor</code> function, we define another function called <code>style</code> for the GeoJSON layer so that its fill the boroughs with colors based on the population density attribute:
 <pre><code class="language-javascript">function style(feature){
     return {
         fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
@@ -192,8 +209,9 @@
         color: 'gray',
         fillOpacity: 0.9
     };
-}</code></pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. If another field is to be mapped, you will need to use the corresponding field name (for question 3).<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
-                        <li>To make the functions work, we have to <b>modify</b> the line of <code>L.geoJson</code> to:
+}</code></pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values.</li>
+
+                        <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
                             <pre><code class="language-javascript">L.geoJson(data, {style:style}).addTo(map);</code></pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
                         Now we have a map with colors (<a href="map/color.txt" target="_blank">sample code</a>) !
                         <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
