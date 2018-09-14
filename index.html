@@ -245,7 +245,7 @@
   }
 &lt;/style&gt;</code>
 </pre></li>
-                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines in red for explanation):
+                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
                         <pre><code class="language-javascript">var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
 legend.onAdd = function (map) {
@@ -267,10 +267,10 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);</code></pre>
-                        The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you answer question 3 or make your own maps.
+                        The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you create your own map.
                         <br><br>
-                        The legend will be created at the bottom right corner of your map with the defined styles and content:
-                          <iframe src="map/map.html" width=95% height=570 frameborder=0></iframe>
+                        The legend will be created at the bottom right corner of your map with the defined styles and content (<a href="" target="_blank">sample code</a>):
+                          <iframe src="map/map3.html" width=95% height=570 frameborder=0></iframe>
                     </li>
 
                 </ul>
