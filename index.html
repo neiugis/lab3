@@ -57,7 +57,7 @@
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
                   <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data.</p>
-                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom.  </p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. You will need to acquire your own data (a shapefile with attribute values you are intended to map) and create a choropleth map. </p>
 
 
 
@@ -145,8 +145,8 @@
                                 <ul>
                                     <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span>
                                       <br>In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify Geometries</b>, use london_borough as Input (see image below).
-                                      <br>For the <b> Simplify tolerance</b>, the unit is the same as the map unit (meter in this case). You could find out the map unit of your own layer by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units (XXX). Basically, vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. I will use <b>0.2</b> here. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.
-                                      <center><img src="img/simplify.png" width=60% align="middle" ></center>
+                                      <br>For the <b> Simplify tolerance</b>, the unit is the same as the map unit (meter in this case). You could find out the map unit of your own layer by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units (XXX). Basically, vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. I will use <b>2</b> here. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.
+                                      <center><img src="img/simplify2.png" width=60% align="middle" ></center>
                                       <br>Click <b>OK</b> to run. Once the process is complete, you will see a dialog window telling you how many vertices have been eliminated.
                                       <br>Note your layer may be in editing mode with many red crosses shown at each vertex. You could get rid of them by clicking on the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">, and click <b>Save</b> in the pop-up dialog to confirm the changes we just made. </li>
 
@@ -163,7 +163,7 @@
                             <li>Click OK to save the GeoJSON file. We will use QGIS to help classify the data values in the Add Colors step but you could exit QGIS if you are intended to work on that later.</li>
                         <li>Use <b>Atom</b> to open the GeoJSON file (similar to open an HTML document). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
-                          <center>  <img src="img/geojson.png" width=80% ></center></li>
+                          <center>  <img src="img/geojson.png" width=100% ></center></li>
                          <li>Save the changed GeoJSON as <code><b>data.js</b></code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we can use <code>data.js</code> for mapping:
