@@ -56,18 +56,18 @@
 
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
-                  <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data.</p>
-                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. You will need to acquire your own data (a shapefile with attribute values you are intended to map) and create a choropleth map. </p>
+                  <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data. We will add mouseover effects and display attribute information as popups/tooltips. Scroll down to the <a href="#final">bottom</a> for an example of the final product.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. Note you will need to acquire <b>your own data</b> (a shapefile with attribute values you are intended to map) for this lab. </p>
 
 
 
                   <p><a id="prep" title="Set Up Basemap" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Set Up Basemap</h3>
                   <ul>
-                         <li>Before you start, create a <b>new file folder</b> (e.g., lab3) for this lab.</li>
+                         <li>Before start, create a <b>new file folder</b> (e.g., lab3) for saving the html document and associated data file.</li>
 
-                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Mapbox light canvas.<br><br>
-                          <b>Note you will need to paste <code>your MapBox access token</code> for the <code>accessToken</code> option of L.tileLayer in order to use MapBox tile layers. </b>It is recommended to save your MapBox token to a file/app that you have easy access to as we may use their canvas background a lot in the future.<br>
+                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Mapbox light canvas.<br>
+                          <b>Note you will need to paste <code>your MapBox access token</code> for the <code>accessToken</code> option of L.tileLayer in order to use MapBox tile layers. </b>It is recommended to save your MapBox token to a file/app for easy access as we will use their canvas background a lot in the future.<br>
 
                                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -108,7 +108,7 @@
 </code></pre></li>
            <li>Then, save the document as <code>map3.html</code> in your lab 3 folder. Please remember to specify the file extension as <b>.html</b> to make it work. Your map should look like:<br></li>
 
-            <iframe src="map/map3.html" width=100% height=520 frameborder=0></iframe><br>
+            <iframe src="map/basemap.html" width=100% height=520 frameborder=0></iframe><br>
             <p>Yep, I will map London this time! </p>
                        </ul>
 
@@ -344,18 +344,20 @@ function resetHighlight(e) {
 }).addTo(map);</code></pre>
                         Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> will return the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> will convert the population density values to string to be displayed properly in the popups. </li>
                         <li>Leaflet also allows adding tooltips when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/popup.html" target="_blank">sample code</a> if needed:
-                        <iframe src="map/popup.html" width=95% height=570 frameborder=0></iframe></li>
+                        <iframe id="final" src="map/popup.html" width=95% height=570 frameborder=0></iframe></li>
                     
                     </ul>
                     
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
-                    <ul><li>Find your own vector layer (polygons with attributes) and create an interactive choropleth map. Specifically, you map need to have:
+                    <ul><li>Find your own vector layer (polygons with attributes to be mapped) and create an interactive choropleth map. Specifically, you map need to have:
                         <ul>
                         <li>Dashed line for polygon boundaries.</li></ul></li>
                         <li>Your final map will be graded based on its overall accuracy (should meet all the requirements above) and cartographic layout/design.</li>
-                        <li>Host your web page (Make sure to rename the html file as <code>index.html</code> and UPLOAD the data file (<code>data.js</code>) to the repository!!!) and submit the url through D2L. </li></ul>
+                        <li>Host your web page via GitHub (Make sure to rename the html file as <code>index.html</code> and UPLOAD the data file (<code>data.js</code>) to the repository!!!) and submit the url through D2L. </li><br>
+                        <li>Going Further: If you would like to explore alternative ways of displaying the attribute information, this <a href="https://leafletjs.com/examples/choropleth/" target="_blank">Leaflet Tutorial</a> introduces how to display information on a custom control pane.</li>
+                    </ul>
 
             <br><br>
             </div>
