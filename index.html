@@ -186,7 +186,9 @@
                         <li>For choosing colors, I recommend <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a> by Dr. Cynthia Brewer, where you can pick a color scheme and get the correponing HTML color codes directly. I will use the 5-class Purples here:<br>
                             <img src="img/green.png"></li>
 
-                        <li>Once we have the color codes, we need to create a javascript function (we call it <code>getColor</code>) that returns a color based on attribute values, i.e., <code>pop_den</code>. Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
+                        <li>Once we have the color codes, we need to create a <b>javascript function</b> (we call it <code>getColor</code>) that returns a color based on attribute values, i.e., <code>pop_den</code>. 
+                            <ul><li>We will define multiple JS functions in this lab for adding styles and interaction to the geojson layer. For the purpose of this class, you will only need to modify the functions to fit your own data. But if you would like to learn more about JS functions, check out this <a href="https://www.w3schools.com/js/js_functions.asp" target="_blank"><b>w3schools tutorial</b></a>.</li></ul>
+                            <br>Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
                             <pre><code class="language-javascript">function getColor(value) {
     return value > 139 ? '#54278f':
            value > 87  ? '#756bb1':
