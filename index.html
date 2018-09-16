@@ -182,11 +182,11 @@
                   <p><a id="color" title="Add Colors" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Add Colors</h3>
                      <ul>
-                        <li>Now, we will color the London Boroughs according to their population density values, e.g., darker color for higher density and lighter color for lower density. Recall the population density data will come from the <code>pop_den</code> attribute/property of the data. </li>
+                        <li>Now, we will color the London boroughs by their population density values, <i>e.g., darker color for higher density and lighter color for lower density</i>. Recall the population density data will come from the <code>pop_den</code> attribute/property of the data. </li>
                         <li>For choosing colors, I recommend <a href="http://colorbrewer2.org/" target="_blank">ColorBrewer</a> by Dr. Cynthia Brewer, where you can pick a color scheme and get the correponing HTML color codes directly. I will use the 5-class Purples here:<br>
                             <img src="img/green.png"></li>
 
-                        <li>Once we have the color codes, we need to create a javascript function that returns a color based on attribute values, i.e., <code>pop_den</code>. Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
+                        <li>Once we have the color codes, we need to create a javascript function (we call it <code>getColor</code>) that returns a color based on attribute values, i.e., <code>pop_den</code>. Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
                             <pre><code class="language-javascript">function getColor(value) {
     return value > 139 ? '#54278f':
            value > 87  ? '#756bb1':
@@ -195,11 +195,11 @@
                          '#f2f0f7';
 }
 </code></pre>
-              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London Boroughs. Recall that I used <code>Natural Breaks</code> as the classification mode and used <code>5 classes</code>.
+              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London boroughs. Recall that I used <code>Natural Breaks</code> as the classification mode in <code>5 classes</code>.
               <br><br>For your own data, you may use QGIS to help determine the break values.
               <br><br>
-              Let's try to take a close look at the fuction: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this on Monday).
-              <br><br>It is okay if you cannot fully understand this. If you use your own data, you will just need to replace the <b>break values</b> and <b>colors</b>. You can, of course, add or remove classes. Please follow the syntax carefully.</li>
+              Let's take a close look at the function: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this on Monday).
+              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the syntax carefully.</li>
 
               <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
 
@@ -212,11 +212,13 @@
         color: 'gray',
         fillOpacity: 0.9
     };
-}</code></pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function attributes, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
+}</code></pre>Note the <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
 <br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference-1.3.4.html#path" target="_blank">here</a> to find out more. Note for the deliverables, you will need to use <b>dashed line</b> for the polygon boudnaries to demonstrate your skill.</li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
-                            <pre><code class="language-javascript">L.geoJson(data, {style:style}).addTo(map);</code></pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
+                            <pre><code class="language-javascript">L.geoJson(data, {
+   style:style
+}).addTo(map);</code></pre>Please make sure the two functions are defined above <code>L.geoJson</code>.<br><br>
                         Now we have a map with colors (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/color.html" target="_blank">sample code</a>) !
                         <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
                     </ul>
@@ -228,7 +230,7 @@
                   <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
 
                     <ul>
-                          <li>Next, we will add legend to the map. In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (see the comment lines in red for explanations):
+                          <li>Next, we will add legend to the map (an essential component of all maps). In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (read the comment lines for explanations):
                         <pre><code class="language-css">&lt;style&gt;
   /* Optional: adjust the values below to change the appearance of the legend */
   .legend {
@@ -249,7 +251,7 @@
   }
 &lt;/style&gt;</code>
 </pre></li>
-                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines below <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
+                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines AFTER <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
                         <pre><code class="language-javascript">var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
 legend.onAdd = function (map) {
@@ -257,10 +259,10 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend'),
         grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
 
-    div.innerHTML = '&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'; // The legend title, in this case it's Population Density 2011
+    div.innerHTML = '&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'; // The legend title (HTML-based), in this case it's Population Density 2011
 
-    // Loop through our the classes and generate a label with a colored square for each interval.
-    // If you are creating a similar choropleth map, you do not need to change lines below.
+    // Loop through our the classes and generate a label with a color box for each interval.
+    // If you are creating a choropleth map, you DO NOT need to change lines below.
     for (var i = 0; i &lt; grades.length; i++) {
         div.innerHTML +=
         '&lt;i style=&quot;background:' + getColor(grades[i] + 1) + '&quot;&gt;&lt;/i&gt;' +
@@ -271,11 +273,11 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);</code></pre>
-                        The above functions for defining the legend may be too much for you to understand. But you can simply replace some small portions according to the comment lines when you create your own map.
+                        The above functions for defining the legend may be too much for you to understand. But you can <b>simply replace some small portions according to the comment lines when mapping your own data</b>.
                         <br><br>
                         The legend will be created at the bottom right corner of your map with the defined styles and content (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/choropleth.html" target="_blank">sample code</a>):
                           <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
-                        Now we have the choropleth map created, with a legend. However, it would be nice to add more interaction to make the most of web mapping.
+                        Now we have the choropleth map and legend created, not bad. However, it would be better to add more interaction to make the most of web-based mapping.
                     </li>
                 </ul>
                 <br>
