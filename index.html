@@ -37,14 +37,14 @@
 
     </head>
 
-    <body style="background-color:#935116">
+    <body style="background-color:#7D6608">
 
         <article class="full">
-            <div class="article-heading js-article-heading js-geopattern" style="background-color:#935116">
+            <div class="article-heading js-article-heading js-geopattern" style="background-color:#7D6608">
                 <div class="wrap">
                   <h1>Incomplete</h1>
                   <!-- <h1>Lab 3 - Interactive Choropleth Map   <i class="fa fa-leaf"></i></h1> -->
-                  <p style="color:#FFC300"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 9/26</b></p>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 9/26</b></h3>
                 </div>
             </div>
 
@@ -323,11 +323,30 @@ function resetHighlight(e) {
     onEachFeature: onEachFeature
 }).addTo(map);</code></pre>
                             Note we have assigned the geojson layer to the <code>geojson</code> variable defined earlier. And the <code>onEachFeature</code> option is use to apply the mouse effects to the geojson layer. 
-                            <br>You map should have the mouseover effects added: (<a href="" target="_blank">sample code</a>)
+                            <br>You map should have the mouseover effects added: (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/mouseover.html" target="_blank">sample code</a>)
                         </li>
                         <iframe src="map/mouseover.html" width=95% height=570 frameborder=0></iframe>
                     </ul>
                     
+                    
+                    
+                  <p><a id="tooltip" title="Add Tooltips" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Tooltips</h3>
+                    <p>To finalize the map, we will add popup/tooltip to each borough with specific attribute information, e.g., name and population density.</p>
+                    <ul>
+                        <li>The <code>bindPopup</code> method we have introduced in Lab 2 can also be used for a geojson layer. <b>MODIFY</b> the <code>L.geoJson</code> part to the following:
+                            <pre><code class="language-javascript">geojson = L.geoJson(data, {
+    style:style,
+    onEachFeature: onEachFeature
+}).bindPopup(function (layer){
+    return layer.feature.properties.NAME 
+           + '&lt;p style=&quot;color:purple&quot;&gt;' + layer.feature.properties.pop_den.toString() + ' people/hectare &lt;/p&gt;';       
+}).addTo(map);</code></pre>
+                        Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> will return the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> will convert the population density values to string to be displayed properly in the popups. </li>
+                        <li>Leaflet also allows adding tooltips when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="" target="_blank">sample code</a> if needed:
+                        <iframe src="map/popup.html" width=95% height=570 frameborder=0></iframe></li>
+                    
+                    </ul>
                     
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
