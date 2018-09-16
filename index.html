@@ -300,7 +300,7 @@ legend.addTo(map);</code></pre>
     // Bring the highlighted feature to front so that the border doesn’t clash with nearby states
     // But not for IE, Opera or Edge, since they have problems doing bringToFront on mouseover
     if (!L.Browser.ie &amp;&amp; !L.Browser.opera &amp;&amp; !L.Browser.edge) {
-        layer.bringToFront();
+        feature.bringToFront();
     }
 }</code></pre>
                         </li>
@@ -318,12 +318,14 @@ function resetHighlight(e) {
 }</code></pre>
                         </li>
                         <li>Next, MODIFY the <code>L.geoJson</code> line to the following:
-                            <pre><code class="language-javascript">geojson = L.geoJson(statesData, {
+                            <pre><code class="language-javascript">geojson = L.geoJson(data, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(map);</code></pre>
-                            Note we have assigned the geojson layer to the <code>geojson</code> variable defined earlier. And the <code>onEachFeature</code> option is use to apply the mouse effects to the geojson layer.
+                            Note we have assigned the geojson layer to the <code>geojson</code> variable defined earlier. And the <code>onEachFeature</code> option is use to apply the mouse effects to the geojson layer. 
+                            <br>You map should have the mouseover effects added: (<a href="" target="_blank">sample code</a>)
                         </li>
+                        <iframe src="map/mouseover.html" width=95% height=570 frameborder=0></iframe>
                     </ul>
                     
                     
