@@ -120,46 +120,48 @@
                         <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com//uc?export=download&id=0BzvZaHCgmEmNYWFmc2R4UHNHSzg" target="_blank">here</a> to download the sample shapefile I am using in this lab. But please note that you will need to find your own data for the assignment submission as stated in the <a href="#deliverable">Deliverables</a> section.</li>
                         <li>Extract the zipped data folder to your desired directory.</li>
 
-                            <li>Launch <strong>QGIS Desktop 2.14</strong> (available in both BBH 242 and BBH 252; It is open source and cross-platform so you may <a href="https://drive.google.com/drive/folders/1YEhhr2qYfemLSetO_del9WO55kxJhnLW?usp=sharing" target=_blank>download QGIS here</a> and install it on your own computer). </li>
+                            <li>Launch <strong>QGIS Desktop</strong>. If you haven't installed QGIS, click <a href="https://qgis.org/en/site/forusers/download.html" target=_blank>here</a> to download and install it on your own computer. </li>
 
-                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> (If you have a newer or older version QGIS, the menu organization may be different). Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
+                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b>. Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
                            <li>The spatial units (polygons) of this layer are the boroughs in the greater London area.</li>
 
                             <li>Right-click the layer in the Layers Panel and select <b>Open Attribute Table</b>. The shapefile contains three fields/attributes: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
 
-                              <li>Although we will be mapping the data on the web eventually, it is helpful to first explore the data in QGIS to help determine the details for rendering the data on the web. Right-click the layer again and select <b>Properties</b>, then choose the <b>Style</b> tab (see image below).
+                              <li>Although we will be mapping the data on the web eventually, it is helpful to first explore the data in QGIS to help determine the details for rendering the data on the web. Right-click the layer again and select <b>Properties</b>, then choose the <b>Symbology</b> tab (see image below).
                                 <ul>
                                 <li>Use <b>Graduated</b> Symbol to render the data (this option is used when making choropleth maps).</li>
-                                <li>For Column, choose the attribute you are intended to map, <code>pop_den</code> in my example.</li>
-                                <li>Under Classes, you could pick the mode of data classification (I used Natural Breaks) and number of classes (I used 5). <br>Wondering what the different modes mean? Check out <a href="https://gisgeography.com/choropleth-maps-data-classification/" target="_blank">this link</a>.</li>
+                                <li>For Value, use the drop-down button to choose the attribute you are intended to map, <code>pop_den</code> in my example.</li>
+                                <li>Under Classes, you could pick the mode of data classification (I used Natural Breaks) and number of classes (I used 5). Make sure to click the <b>Classify</b> button or your map may disappear.<br>Wondering what the different modes mean? Check out <a href="https://gisgeography.com/choropleth-maps-data-classification/" target="_blank">this link</a>.</li>
                                   <center><img src="img/class.png" width=100% align="middle" ></center>
                                 <li>Click OK to apply the selected style. And you should see an example of the london boroughs map rendered as a choropleth map.</li>
                               <center><img src="img/choropleth.png" width=100% align="middle" ></center>
-                            <li>Pay attention to the legend of the map, jot down the approximate break numbers, we will need these values later when adding the data to the web map. For example, I take notes of the integer values of <i>32, 53, 87, 139</i> for later use.</li> </ul>
+                            <li>Pay attention to the legend of the map, jot down the approximate break numbers, we will need these values later when adding the data to the web map. For example, I take notes of the four integer values of <i>32, 53, 87, 139</i> for later use.</li> </ul>
                               </li>
 
 
                               <br>
                               <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile to GeoJSON: (1) <span style="color:#C0392B; font-weight:bold">simplify geometry</span>; and (2) <span style="color:#C0392B  ; font-weight:bold">delete unwanted fields in the attribute table</span>. I will show you how to do so in the following steps: <br>
                                 <ul>
-                                    <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span>
-                                      <br>In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify Geometries</b>, use london_borough as Input (see image below).
-                                      <br>For the <b> Simplify tolerance</b>, the unit is the same as the map unit (meter in this case). Basically, vertices are removed if the distance with the tentative simplified line is smaller than the tolerance. Therefore, higher tolerance values would generate simpler features (smaller file size) but also lose some details. I will use <b>2</b> here. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.
-                                      <center><img src="img/simplify2.png" width=60% align="middle" ></center>
-                                      <br>Click <b>OK</b> to run. Once the processing is complete, you will see a dialog window telling you how many vertices have been eliminated.
-                                      <br>Note your layer may be in editing mode with many red crosses shown at each vertex. <br>You could get rid of them by clicking on the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">, and click <b>Save</b> in the pop-up dialog to confirm the changes we just made. 
-                                    <br><br>For your own data, you could find out the map unit by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units. The unit is shown as part of the map unit option. </li>
+                                    <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span><ul>
+                                        <li>In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify</b>, use london_borough as the Input layer (see image below).</li>
+                                        <li>For <b>Simplification method</b>, we will use the default Distance based algorithm, which removes vertices if the length of the tentative simplified line is smaller than the specified tolerance. </li>
+                                        <li>For <b> Tolerance</b>, I used 2 meters. Basically, higher tolerance values would generate simpler features (smaller file size) but also lose some details. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.</li>
+                                        <li>For <b>Simplified</b> results, we will leave it to Create temporary layer as we will export the temporary layer to a geojson file shortly.</li>
+                                      <center><img src="img/simplify2.png" width=100% align="middle" ></center>
+<!--                                          <br>Note your layer may be in editing mode with many red crosses shown at each vertex. <br>You could get rid of them by clicking on the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">, and click <b>Save</b> in the pop-up dialog to confirm the changes we just made. --></li></ul>
+<!--                                    <br><br>For your own data, you could find out the map unit by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units. The unit is shown as part of the map unit option. -->
+                                    </li>
 
                                     <li><span style="color:#C0392B  ; font-weight:bold">Delete unwanted fields</span>
-                                    <br>You could delete fields of a layer within its attribute table (right-click the layer in the Layes Panel and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the same pencil button. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
+                                    <br>You could delete fields of a layer within its attribute table (right-click the <b>Simplified </b>layer in the Layers Pane and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
                                     <br>Turn off the editing mode and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
                                 </ul>
 
                         </li>
 
 
-                        <li>Now we are ready to export the layer. Right-click the layer in the Layes Panel and select <b>Save As...</b>. In the dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
-                            <center><img src="img/qgis.png" width=100% ></center></li>
+                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
+                            <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
                         <li>Use <b>Atom</b> to open the GeoJSON file (in Atom, select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
@@ -169,7 +171,7 @@
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we could use the <code>data.js</code> data in our map:
                             <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
-                        <li>Then, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer).
+                        <li>Next, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer).
                             <pre><code class="language-javascript">L.geoJson(data).addTo(map);</code></pre>
                         The GeoJSON data layer is now added to the map! Take a look at the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/geojsondata.html" target="_blank">sample code</a> if needed.
                       <iframe src="map/geojsondata.html" height=570 width=100% frameborder=0></iframe></li>
