@@ -44,7 +44,7 @@
                 <div class="wrap">
                   
                    <h1>Lab 3. Interactive Choropleth Map   <i class="fa fa-leaf"></i></h1> 
-                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 9/26</b></h3>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Thursday, 9/24</b></h3>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
                   <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data. We will add mouseover effects and display attribute information as popups/tooltips. Scroll down to the <a href="#final">bottom</a> for an example of the final product.</p>
-                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. Note you will need to acquire <b>your own data</b> (a shapefile with attribute values you are intended to map) for this lab. </p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. Note you will need to acquire <b>your own data</b> (a shapefile with attribute values you are intended to map) for this lab. </p>
 
 
 
@@ -66,20 +66,20 @@
                   <ul>
                          <li>Before start, create a <b>new file folder</b> (e.g., lab3) for saving the html document and associated data file.</li>
 
-                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Mapbox light canvas.<br>
-                          <b>Note you will need to paste <code>your MapBox access token</code> for the <code>accessToken</code> option of L.tileLayer in order to use MapBox tile layers. </b>It is recommended to save your MapBox token to a file/app for easy access as we will use their canvas background a lot in the future.<br>
+                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Carto light canvas.<br> 
+                          If you are interested in using different basemaps, refer to this <a href="https://wiki.openstreetmap.org/wiki/Tile_servers", target="_blank">OpenStreetMap wiki page</a> which privides a list of tile maps with their url and attribution.
 
                                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;Lab 3&lt;/title&gt;
 
-        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.css&quot;
-        integrity=&quot;sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==&quot;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.css&quot;
+        integrity=&quot;sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==&quot;
         crossorigin=&quot;&quot;/&gt;
 
-        &lt;script src=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.js&quot;
-        integrity=&quot;sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==&quot;
+        &lt;script src=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.js&quot;
+        integrity=&quot;sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==&quot;
         crossorigin=&quot;&quot;&gt;&lt;/script&gt;
 
     &lt;/head&gt;
@@ -94,12 +94,10 @@
               zoom: 10
           });
 
-         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+         L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+           attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
            maxZoom: 11,
-           minZoom: 5,
-           id: 'mapbox.light',
-           accessToken: 'your mapbox public access token'
+           minZoom: 5
          }).addTo(map);
 
         &lt;/script&gt;
@@ -109,7 +107,7 @@
            <li>Then, save the document as <code>map3.html</code> in your lab 3 folder. Please remember to specify the file extension as <b>.html</b> to make it work. Your map should look like:<br></li>
 
             <iframe src="map/basemap.html" width=100% height=520 frameborder=0></iframe><br>
-            <p>Yep, I will map London this time! </p>
+            <p>Yep, I will map London as an example this time! </p>
                        </ul>
 
 
@@ -119,7 +117,7 @@
                     <p>In Lab 2, we have introduced a way to add markers manually using their coordinates. But you may wish to work with more complex spatial features as in a desktop GIS. So we introduce GeoJSON, which is a format for encoding a variety of geographic data structures (<a href="http://geojson.org" target="_blank">http://geojson.org</a>).</p>
                      <ul>
 
-                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com//uc?export=download&id=0BzvZaHCgmEmNYWFmc2R4UHNHSzg" target="_blank">here</a> to download the sample shapefile I am using in this lab. </li>
+                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com//uc?export=download&id=0BzvZaHCgmEmNYWFmc2R4UHNHSzg" target="_blank">here</a> to download the sample shapefile I am using in this lab. But please note that you will need to find your own data for the assignment submission as stated in the <a href="#deliverable">Deliverables</a> section.</li>
                         <li>Extract the zipped data folder to your desired directory.</li>
 
                             <li>Launch <strong>QGIS Desktop 2.14</strong> (available in both BBH 242 and BBH 252; It is open source and cross-platform so you may <a href="https://drive.google.com/drive/folders/1YEhhr2qYfemLSetO_del9WO55kxJhnLW?usp=sharing" target=_blank>download QGIS here</a> and install it on your own computer). </li>
