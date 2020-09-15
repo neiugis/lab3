@@ -253,7 +253,7 @@
   }
 &lt;/style&gt;</code>
 </pre></li>
-                    <li>Next, in the <code>script</code> section of <code>body</code>, add the following lines AFTER <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
+                    <li>Next, in the <code>script</code> section INSIDE <code>body</code>, add the following lines AFTER <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
                         <pre><code class="language-javascript">var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
 legend.onAdd = function (map) {
