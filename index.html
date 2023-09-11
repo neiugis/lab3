@@ -57,7 +57,7 @@
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
                   <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data. We will add mouseover effects and display attribute information as popups/tooltips. Scroll down to the <a href="#final">bottom</a> for an example.</p>
-                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. Note you will need to acquire <b>your own data</b> (a shapefile with attribute values you are intended to map) for this lab. </p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. </p>
 
 
 
@@ -113,11 +113,11 @@
 
 
                 <p><a id="geojson" title="Prepare and Add GeoJSON Layer" class="toc-item"></a></p>
-                  <h3><i class="fa fa-paint-brush"></i> Prepare and Add GeoJSON Layer</h3>
+                  <h3><i class="fa fa-paint-brush"></i> Prepare and Add the GeoJSON Layer</h3>
                     <p>In Lab 2, we have introduced a way to add markers manually using their coordinates. But you may wish to work with more complex spatial features as in a desktop GIS. So we introduce GeoJSON, which is a format for encoding a variety of geographic data structures (<a href="https://geojson.org" target="_blank">https://geojson.org</a>).</p>
                      <ul>
 
-                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com//uc?export=download&id=0BzvZaHCgmEmNYWFmc2R4UHNHSzg" target="_blank">here</a> to download the sample shapefile I am using for the demonstration. But please note that you will need to find your own data for the assignment submission as stated in the <a href="#deliverable">Deliverables</a> section.</li>
+                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com/file/d/11do4G0BRo04RMcAlQZwIVibslsEU37pV/view?usp=sharing" target="_blank">here</a> to download the sample shapefile I am using for the demonstration. </li>
                         <li>Extract the zipped data folder to your desired directory.</li>
 
                             <li>Launch <strong>QGIS Desktop</strong>. If you haven't installed QGIS, click <a href="https://qgis.org/en/site/forusers/download.html" target=_blank>here</a> to download and install it on your own computer. </li>
@@ -165,7 +165,7 @@
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
-                        <li>Use <b>Atom</b> to open the GeoJSON file (in Atom, select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
+                        <li>Use your <b>code editor</b> to open the GeoJSON file (select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
                           <center>  <img src="img/geojson.png" width=100% ></center></li>
                          <li>Save the changed GeoJSON as <code><b>data.js</b></code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
