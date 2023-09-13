@@ -202,11 +202,11 @@
               <br><br>For your own data, you may use QGIS to help determine the break values.
               <br><br>
               Let's take a close look at the function: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this next week).
-              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the syntax carefully.</li>
+              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the logic.</li>
 
               <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
 
-                        <li>Following the <code>getColor</code> function, we define another function called <code>style</code> for the GeoJSON layer so that its fill the boroughs with colors based on the population density attribute:
+                        <li>Following the <code>getColor</code> function, we define another function called <code>style</code> for the GeoJSON layer to fill the boroughs with colors based on the population density attribute:
 <pre><code class="language-javascript">function style(feature){
     return {
         fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
@@ -215,8 +215,8 @@
         color: 'gray',
         fillOpacity: 0.9
     };
-}</code></pre>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fillcolor of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
-<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference-1.3.4.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line</b> for the polygon boudnaries to demonstrate your skill.</span></li>
+}</code></pre>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
+<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference-1.3.4.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line</b> for the polygon boundaries.</span></li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
                             <pre><code class="language-javascript">L.geoJson(data, {
