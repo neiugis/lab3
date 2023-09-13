@@ -352,8 +352,8 @@ function resetHighlight(e) {
 }).addTo(map);</code></pre>
                         Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> returns the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> returns and converts the population density (numeric values) to <b>strings</b> so that it can be displayed properly in the popups. </li>
                         
-                        <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/popup.html" target="_blank">sample code</a> if needed):
-                        <iframe id="final" src="map/popup.html" width=95% height=570 frameborder=0></iframe></li>
+                        <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/tooltip.html" target="_blank">sample code</a> if needed):
+                        <iframe id="final" src="map/tooltip.html" width=95% height=570 frameborder=0></iframe></li>
                     
                     </ul>
                     
