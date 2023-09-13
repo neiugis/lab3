@@ -122,7 +122,8 @@
 
                             <li>Launch <strong>QGIS Desktop</strong>. If you haven't installed QGIS, click <a href="https://qgis.org/en/site/forusers/download.html" target=_blank>here</a> to download and install it on your own computer. </li>
 
-                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b>. Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file to open it in QGIS. </li>
+                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b>. Then browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file and click Add to open it in QGIS. Then Close the Add Layer window.</li>
+							<img src="img/addlayer.png" width=100% align="middle" >
                            <li>The spatial units (polygons) of this layer are the boroughs in the greater London area.</li>
 
                             <li>Right-click the london_borough in the Layers Pane and select <b>Open Attribute Table</b>. The shapefile contains three fields/attributes: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. </li>
@@ -149,12 +150,11 @@
                                         <li>For <b>Simplified</b> results, we will leave it to Create temporary layer as we will export the temporary layer to a geojson file shortly.</li>
                                       <center><img src="img/simplify2.png" width=100% align="middle" ></center>
                                         <li>Click Run to start the simplification. Once the processing is complete, return to the main QGIS window to examine the Simplified results and make sure your results don't lose too much details. If necessary, repeat the Simplification process with a smaller tolerance.
-<!--                                          <br>Note your layer may be in editing mode with many red crosses shown at each vertex. <br>You could get rid of them by clicking on the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">, and click <b>Save</b> in the pop-up dialog to confirm the changes we just made. --></li></ul>
-<!--                                    <br><br>For your own data, you could find out the map unit by selecting <b>Project > Project Properties</b>, then the <b>General</b> tab, under <b>Coordinate display</b> to choose Display coordinates using Map units. The unit is shown as part of the map unit option. -->
+
                                     </li>
 
                                     <li><span style="color:#C0392B  ; font-weight:bold">Delete unwanted fields</span>
-                                    <br>You could delete fields of a layer within its attribute table (right-click the <b>Simplified </b>layer in the Layers Pane and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the <b>Toggle Edit</b> button <img src="img/button.png" align="bottom">. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
+                                    <br>You could delete fields of a layer within its attribute table (right-click the <b>Simplified </b>layer in the Layers Pane and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the <b>Toggle editing mode</b> button (Ctrl+E) <img src="img/button.png" align="bottom">. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
                                     <br>Turn off the editing mode and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
                                 </ul>
 
