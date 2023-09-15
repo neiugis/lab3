@@ -216,7 +216,7 @@
         fillOpacity: 0.9
     };
 }</code></pre>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
-<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries.</span></li>
+<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries. <a href="https://leafletjs.com/examples/choropleth/" target="_blank">This tutorial</a> offers an example of how to implement the dashArray option.</span></li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
                             <pre><code class="language-javascript">L.geoJson(data, {
