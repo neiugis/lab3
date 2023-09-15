@@ -161,14 +161,14 @@
                         </li>
 
 
-                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
+                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
                         <li>Use your <b>code editor</b> to open the GeoJSON file (select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
                           <center>  <img src="img/geojson.png" width=100% ></center></li>
-                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
+                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we could use the <code>data.js</code> data in our map:
                             <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
