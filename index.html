@@ -155,20 +155,20 @@
 
                                     <li><span style="color:#C0392B  ; font-weight:bold">Delete unwanted fields</span>
                                     <br>You could delete fields of a layer within its attribute table (right-click the <b>Simplified </b>layer in the Layers Pane and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the <b>Toggle editing mode</b> button (Ctrl+E) <img src="img/button.png" align="bottom">. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
-                                    <br>Turn off the editing mode and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
+                                    <br>Turn off the editing mode (Ctrl+E) and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
                                 </ul>
 
                         </li>
 
 
-                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab data folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
+                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <b>EPSG:4326 - WGS 84</b> (see image below). <br>
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
                         <li>Use your <b>code editor</b> to open the GeoJSON file (select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
                             <pre><code class="language-javascript">var data = </code></pre>
                           <center>  <img src="img/geojson.png" width=100% ></center></li>
-                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to your <b>lab working folder (where your html file is saved)</b>. Note the file extension is <code>.js</code>.
+                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we could use the <code>data.js</code> data in our map:
                             <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
@@ -216,7 +216,7 @@
         fillOpacity: 0.9
     };
 }</code></pre>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
-<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference-1.3.4.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line</b> for the polygon boundaries.</span></li>
+<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries. <a href="https://leafletjs.com/examples/choropleth/" target="_blank">This tutorial</a> offers an example of how to implement the dashArray option.</span></li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
                             <pre><code class="language-javascript">L.geoJson(data, {
@@ -280,7 +280,7 @@ legend.addTo(map);</code></pre>
                         <br><br>
                         The legend will be created at the bottom right corner of your map with the defined styles and content (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/choropleth.html" target="_blank">sample code</a>):
                           <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
-                        Now we have the choropleth map and legend created, not bad. However, it would be better to add more interaction to make the most of web-based mapping.
+                        Now we have the choropleth map and legend created, not bad. However, it would be better to add more interactions to make the most of web-based mapping.
                     </li>
                 </ul>
                 <br>
@@ -352,15 +352,15 @@ function resetHighlight(e) {
 }).addTo(map);</code></pre>
                         Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> returns the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> returns and converts the population density (numeric values) to <b>strings</b> so that it can be displayed properly in the popups. </li>
                         
-                        <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/popup.html" target="_blank">sample code</a> if needed):
-                        <iframe id="final" src="map/popup.html" width=95% height=570 frameborder=0></iframe></li>
+                        <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/tooltip.html" target="_blank">sample code</a> if needed):
+                        <iframe id="final" src="map/tooltip.html" width=95% height=570 frameborder=0></iframe></li>
                     
                     </ul>
                     
 
                   <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
-                    <ul><li>ind <mark>your own data</mark> (polygons with numeric attribute to be mapped, <b>8 pts</b>) and create an <mark>interactive choropleth map with a legend</mark> (<b>7 pts</b>). Specifically, you map need to have:
+                    <ul><li>ind <mark>your own data</mark> (polygons with numeric attribute to be mapped, <b>8 pts</b>) and create an <mark>interactive choropleth map with a legend</mark> (<b>7 pts</b>). Specifically, your deliverable map needs to have:
                         <ul>
                             <li><mark>dashed lines</mark> for polygon boundaries (<b>3 pts</b>),</li>
                             <li>feature highlighted with a <mark>thick white border on mouseover</mark> (<b>3 pts</b>), and </li>

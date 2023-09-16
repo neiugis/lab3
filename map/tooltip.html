@@ -104,8 +104,11 @@
 
 		 
 		geojson = L.geoJson(data, {
-		    style: style,
+		    style:style,
 		    onEachFeature: onEachFeature
+		}).bindTooltip(function (layer){
+		    return layer.feature.properties.NAME 
+		           + '<p style="color:purple">' + layer.feature.properties.pop_den.toString() + ' people/hectare </p>';       
 		}).addTo(map);
 
 		 var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
