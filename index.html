@@ -248,14 +248,29 @@
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
                         <li>Use your <b>code editor</b> to open the GeoJSON file (select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
-                            <pre><code class="language-javascript">var data = </code></pre>
-                          <center>  <img src="img/geojson.png" width=100% ></center></li>
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var data = </code></pre></div></li>
+                          <center>  <img src="img/geojson.png" width=100% ></center>
                          <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
                         <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we could use the <code>data.js</code> data in our map:
-                            <pre><code class="language-javascript">&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></li>
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></div></li>
                         <li>Next, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer).
-                            <pre><code class="language-javascript">L.geoJson(data).addTo(map);</code></pre>
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+L.geoJson(data).addTo(map);</code></pre></div>
                         The GeoJSON data layer is now added to the map! Take a look at the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/geojsondata.html" target="_blank">sample code</a> if needed.
                       <iframe src="map/geojsondata.html" height=570 width=100% frameborder=0></iframe></li>
                     </ul>
@@ -272,14 +287,19 @@
                         <li>Once we have the color codes, we need to create a <b>javascript function</b> (we call it <code>getColor</code>) that returns a color based on attribute values, i.e., <code>pop_den</code>. 
                             <ul><li>We will define multiple JS functions in this lab for adding styles and interaction to the geojson layer. For the purpose of this class, you will only need to modify the functions to fit your own data. But if you would like to learn more about JS functions, check out this <a href="https://www.w3schools.com/js/js_functions.asp" target="_blank"><b>w3schools tutorial</b></a>.</li></ul>
                             <br>Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
-                            <pre><code class="language-javascript">function getColor(value) {
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function getColor(value) {
     return value > 139 ? '#54278f':
            value > 87  ? '#756bb1':
            value > 53  ? '#9e9ac8':
            value > 32  ? '#cbc9e2':
                          '#f2f0f7';
 }
-</code></pre>
+</code></pre></div>
               In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London boroughs. Recall that I used <code>Natural Breaks</code> as the classification mode in <code>5 classes</code>.
               <br><br>For your own data, you may use QGIS to help determine the break values.
               <br><br>
@@ -289,7 +309,12 @@
               <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
 
                         <li>Following the <code>getColor</code> function, we define another function called <code>style</code> for the GeoJSON layer to fill the boroughs with colors based on the population density attribute:
-<pre><code class="language-javascript">function style(feature){
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function style(feature){
     return {
         fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
         weight: 2,
@@ -297,13 +322,18 @@
         color: 'gray',
         fillOpacity: 0.9
     };
-}</code></pre>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
+}</code></pre></div>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
 <br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries. <a href="https://leafletjs.com/examples/choropleth/" target="_blank">This tutorial</a> offers an example of how to implement the dashArray option.</span></li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
-                            <pre><code class="language-javascript">L.geoJson(data, {
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+L.geoJson(data, {
    style:style
-}).addTo(map);</code></pre>Please make sure the getColor and style functions are defined above <code>L.geoJson</code>.<br><br>
+}).addTo(map);</code></pre></div>Please make sure the getColor and style functions are defined above <code>L.geoJson</code>.<br><br>
                         Now we have a map with colors (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/color.html" target="_blank">sample code</a>) !
                         <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
                     </ul>
@@ -316,7 +346,12 @@
 
                     <ul>
                           <li>Next, we will add legend to the map (an essential component of all maps). In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (read the comment lines for explanations):
-                        <pre><code class="language-css">&lt;style&gt;
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+&lt;style&gt;
   /* Optional: adjust the values below to change the appearance of the legend */
   .legend {
       padding: 6px 8px;
@@ -335,9 +370,14 @@
       opacity: 0.7;
   }
 &lt;/style&gt;</code>
-</pre></li>
+</pre></div></li>
                     <li>Next, in the <code>script</code> section INSIDE <code>body</code>, add the following lines AFTER <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation):
-                        <pre><code class="language-javascript">var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
 legend.onAdd = function (map) {
 
@@ -357,7 +397,7 @@ legend.onAdd = function (map) {
     return div;
 };
 
-legend.addTo(map);</code></pre>
+legend.addTo(map);</code></pre></div>
                         The above functions for defining the legend may be too much for you to understand. But you can <b>simply replace some small portions according to the comment lines when mapping your own data</b>.
                         <br><br>
                         The legend will be created at the bottom right corner of your map with the defined styles and content (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/choropleth.html" target="_blank">sample code</a>):
@@ -374,7 +414,12 @@ legend.addTo(map);</code></pre>
                     <p>Let's make the boroughs <b>highlighted visually when they are hovered with a mouse</b>.</p>
                     <ul>
                       <li>We will first define a function for the mouseover effect, call it <code>highlightFeature</code>. Place the following lines BEFORE adding the geojson. Please read the comment lines for explanations. 
-                          <pre><code class="language-javascript">function highlightFeature(e) {
+                          <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function highlightFeature(e) {
     // Get access to the feature that was hovered through e.target
     var feature = e.target;
 
@@ -392,26 +437,42 @@ legend.addTo(map);</code></pre>
     if (!L.Browser.ie &amp;&amp; !L.Browser.opera &amp;&amp; !L.Browser.edge) {
         feature.bringToFront();
     }
-}</code></pre>
+}</code></pre></div>
                         </li>
-                        <li>Next, we will define another function to reset the feature to its original style on mouseout. Place the following lines AFTER the <code>highlightFeature</code> function. <pre><code class="language-javascript">var geojson; // define a variable to make the geojson layer accessible for the funtion to use   
+                        <li>Next, we will define another function to reset the feature to its original style on mouseout. Place the following lines AFTER the <code>highlightFeature</code> function. 
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var geojson; // define a variable to make the geojson layer accessible for the funtion to use   
             
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
-}</code></pre></li>
+}</code></pre></div></li>
                         <li>Now, we are ready to apply the two functions as the layer's mouseover and mouseout effects. Following the two functions, add another function to apply the effects on mouseover and mouseout.
-                            <pre><code class="language-javascript">function onEachFeature(feature, layer) {
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature, // Do what defined by the highlightFeature function on mouseover
         mouseout: resetHighlight,    // Do what defined by the resetHighlight function on mouseout
     });
-}</code></pre>
+}</code></pre></div>
                         </li>
                         <li>Next, <b>MODIFY</b> the <code>L.geoJson</code> line to the following:
-                            <pre><code class="language-javascript">geojson = L.geoJson(data, {
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+geojson = L.geoJson(data, {
     style: style,
     onEachFeature: onEachFeature
-}).addTo(map);</code></pre>
+}).addTo(map);</code></pre></div>
                             Note we have assigned the geojson layer to the <code>geojson</code> variable defined earlier. And the <code>onEachFeature</code> option is use to apply the mouse effects to the geojson layer. 
                             <br>You map should have the mouseover effects added: (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/mouseover.html" target="_blank">sample code</a>)
                         </li>
@@ -425,13 +486,18 @@ function resetHighlight(e) {
                     <p>To finalize the map, we will add popup/tooltip to each borough with specific attribute information, <i>e.g., borough name and population density</i>.</p>
                     <ul>
                         <li>The <code>bindPopup</code> method we have introduced in Lab 2 can also be used for a geojson layer. <b>MODIFY</b> the <code>L.geoJson</code> part to the following:
-                            <pre><code class="language-javascript">geojson = L.geoJson(data, {
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+geojson = L.geoJson(data, {
     style:style,
     onEachFeature: onEachFeature
 }).bindPopup(function (layer){
     return layer.feature.properties.NAME 
            + '&lt;p style=&quot;color:purple&quot;&gt;' + layer.feature.properties.pop_den.toString() + ' people/hectare &lt;/p&gt;';       
-}).addTo(map);</code></pre>
+}).addTo(map);</code></pre></div>
                         Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> returns the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> returns and converts the population density (numeric values) to <b>strings</b> so that it can be displayed properly in the popups. </li>
                         
                         <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/tooltip.html" target="_blank">sample code</a> if needed):
