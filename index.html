@@ -10,6 +10,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
 
       <link rel="icon" href="brazil.png" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
       <link rel="stylesheet" href="gridism.css">
       <link rel="stylesheet" href="markdown.css">
@@ -34,6 +35,83 @@
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
       </script>
+        
+        <style>
+            .code-container {
+            position: relative; /* Allows the button to be positioned inside the container */
+            background-color: #f7f7f8;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto; /* Ensures scroll if content exceeds width */
+        }
+
+        /* Style for the pre and code block */
+        .code-container pre {
+            margin: 0;
+            background: none;
+            border: 1px solid #f7f7f8;
+            padding: 0px 0 0 0; /* Add padding to the top for the button */
+            white-space: pre-wrap;  /* Enable line wrapping */
+            word-wrap: break-word;  /* Allow breaking long words */
+            overflow-wrap: break-word; /* Break long words in modern browsers */
+            font-size: 14px;
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+        }
+
+        /* Style for the copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #566573;
+            color: #fdfefe;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tooltip styling */
+        .copy-btn[data-tooltip]::after {
+            content: attr(data-tooltip); /* Display the tooltip text */
+            position: absolute;
+            bottom: 125%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333; /* Dark background for the tooltip */
+            color: #fff; /* White text color */
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Show the tooltip on hover */
+        .copy-btn:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Icon inside the button */
+        .copy-btn i {
+            margin-right: 5px; /* Space between the icon and text */
+        }
+
+        /* Change background color when hovering over the button */
+        .copy-btn:hover {
+            background-color: #566573;
+        }
+        
+        </style>
 
     </head>
 
@@ -69,7 +147,11 @@
                           <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Carto light canvas.<br> 
                          
 
-                               <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+                                 <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;Lab 3&lt;/title&gt;
@@ -103,7 +185,7 @@
         &lt;/script&gt;
    &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></li>
+</code></pre></div></li>
            <li>Then, save the document as <code>map3.html</code> in your lab 3 folder. Please remember to specify the file extension as <b>.html</b> to make it work. Your map should look like:<br></li>
 
             <iframe src="map/basemap.html" width=100% height=520 frameborder=0></iframe><br>
@@ -366,16 +448,19 @@ function resetHighlight(e) {
                         <ul>
                             <li><mark>dashed lines</mark> for polygon boundaries (<b>3 pts</b>),</li>
                             <li>feature highlighted with a <mark>thick white border on mouseover</mark> (<b>3 pts</b>), and </li>
-                            <li><mark>tooltips</mark> to display attribute information being mapped (include name/label of features and measurement unit, if applies; <b>4 pts</b>).</li></ul>
+                            <li><mark>tooltips</mark> to display attribute information being mapped (include name/label of features and measurement unit, if applies; <b>4 pts</b>).</li></ul></li>
                         <li>Your final map will be graded based on its <b>overall accuracy (should meet all the requirements above)</b> and <b>cartographic layout/design</b>.</li>
                         <li>Host your web page via GitHub (Make sure to rename the html file as <code>index.html</code> and upload the data file (<code>data.js</code>) to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=203219&ou=3007900" target="_blank">D2L</a>. </li><br>
                         <li><i>Going Further:</i> If you would like to explore alternative ways of displaying the attribute information, this <a href="https://leafletjs.com/examples/choropleth/" target="_blank">Leaflet Tutorial</a> introduces how to display information on a custom control pane.</li>
                     </ul>
 
             <br><br>
+                                  
+      
+           
             </div>
-            </div>
-        </article>
+                    </div>
+                    </article>
 
           <footer>
             <div class="wrap">
@@ -386,6 +471,29 @@ function resetHighlight(e) {
           </footer>
 
             <script src="prism.js"></script>
+            
+               <script>
+            function copyToClipboard(button) {
+                // Find the code block within the same container as the button
+                const codeContainer = button.closest('.code-container');
+                const codeText = codeContainer.querySelector('pre code').innerText;
+
+                // Copy the code text to the clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Change the button text to "Copied!" on success
+                    button.innerHTML = ' <i class="fa-solid fa-check"></i> <strong>Copied!</strong>';
+                    button.style.backgroundColor = '#6cbf43'; // Green background for success
+
+                    // Reset the button text and background color after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fa-regular fa-copy"></i> <strong>Copy code</strong>';
+                        button.style.backgroundColor = '#566573'; // Reset to original color
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+            </script>
 
      </body>
 </html>
