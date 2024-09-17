@@ -311,7 +311,7 @@ function getColor(value) {
               <br><br>For your own data, you may use QGIS to help determine the break values.
               <br><br>
               Let's take a close look at the function: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this next week).
-              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the logic.</li>
+              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the structure.</li>
 
               <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
 
@@ -329,7 +329,9 @@ function style(feature){
         color: 'gray',
         fillOpacity: 0.9
     };
-}</code></pre></div>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data.<br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
+}</code></pre></div>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data. Letter case matters.
+                            
+                            <br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
 <br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries. <a href="https://leafletjs.com/examples/choropleth/" target="_blank">This tutorial</a> offers an example of how to implement the dashArray option.</span></li>
 
                         <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
