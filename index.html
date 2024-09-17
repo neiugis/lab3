@@ -244,7 +244,8 @@
                         </li>
 
 
-                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <strong>EPSG:4326 - WGS 84</strong> (see image below). <br>
+                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <strong>EPSG:4326 - WGS 84</strong>!!! (see image below)
+                            <ul><li>Note that Leaflet expects all shape data to be specified in latitude and longitude using <code>EPSG:4326 - WGS 84</code>. If your map data do not show up, I would double check if the correct coordinate system was selected.</li></ul> 
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
