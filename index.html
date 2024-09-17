@@ -245,7 +245,8 @@
 
 
                         <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <strong>EPSG:4326 - WGS 84</strong>!!! (see image below)
-                            <ul><li>Note that Leaflet expects all shape data to be specified in latitude and longitude using <code>EPSG:4326 - WGS 84</code>. If your map data do not show up, I would double check if the correct coordinate system was selected.</li></ul> 
+                           <ul class="fa-ul">
+                               <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span> Note that Leaflet expects all shape data to be specified in latitude and longitude using <code>EPSG:4326 - WGS 84</code>. If your map data do not show up, I would double check if the correct coordinate system was selected.</li></ul> 
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
@@ -259,14 +260,18 @@ var data = </code></pre></div></li>
                           <center>  <img src="img/geojson.png" width=100% ></center>
                          <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
-                        <li>Return to your map HTML document. In the <code>head</code> section, following the leaflet css and JS libraries, include the following line so that we could use the <code>data.js</code> data in our map (Note the data.js file is located in the same folder as the map html):
+                        <li>Return to your map HTML document. In the <code>head</code> section, following the leaflet css and JS libraries, include the following line so that we could use the <code>data.js</code> data in our map. <br>
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span> Since the data.js file is located in the same folder as the map HTML file, we can reference it by its file name alone.</li></ul>
                             <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
                                
                                 <pre><code class="language-js">
 &lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></div></li>
-                        <li>Next, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer).
+                        <li>Next, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer). 
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span>  We place the GeoJSON layer after the tile layer to ensure it is displayed on top. If your layer isn't showing up, double-check the order in which the layers are added.</li></ul>
                             <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
