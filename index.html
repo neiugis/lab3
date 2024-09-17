@@ -249,7 +249,7 @@
                             <center><img src="img/qgis.png" width=90% ></center></li>
                             <li>Click OK to save the GeoJSON file. </li>
                                 <li>Exit QGIS (no need to save the current project).</li>
-                        <li>Use your <b>code editor</b> to open the GeoJSON file (select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
+                        <li>Use your <b>code editor</b> to open the GeoJSON data file, i.e., london.geojson (In the code editor, select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
                             <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
@@ -259,7 +259,7 @@ var data = </code></pre></div></li>
                           <center>  <img src="img/geojson.png" width=100% ></center>
                          <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
                              <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
-                        <li>Return to your HTML document. In the <code>head</code> section, include the following line so that we could use the <code>data.js</code> data in our map:
+                        <li>Return to your map HTML document. In the <code>head</code> section, following the leaflet css and JS libraries, include the following line so that we could use the <code>data.js</code> data in our map (Note the data.js file is located in the same folder as the map html):
                             <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
