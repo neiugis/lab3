@@ -209,15 +209,15 @@
 							<img src="img/addlayer.png" width=100% align="middle" >
                            <li>The spatial units (polygons) of this layer are the boroughs in the greater London area.</li>
 
-                            <li>Right-click the london_borough in the Layers Pane and select <b>Open Attribute Table</b>. The shapefile contains three fields/attributes: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. Close the attribute table.</li>
+                            <li>In the Layers Pane, right-click the london_borough layer, select <b>Open Attribute Table</b>. The shapefile contains three fields/attributes: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. Close the attribute table.</li>
 
                               <li>Although we will be mapping the data on the web eventually, it is helpful to first explore the data in QGIS to help determine the details for rendering the data on the web. Right-click the layer again and select <b>Properties</b>, then click the <b>Symbology</b> tab (see image below).
                                 <ul>
-                                <li>Use <b>Graduated</b> Symbol to render the data (this option is used when making choropleth maps).</li>
+                                <li>Use <b>Graduated</b> to render the data (this option is used when making choropleth maps).</li>
                                 <li>For Value, use the drop-down button to choose the attribute you are intended to map, <code>pop_den</code> in my example.</li>
                                 <li>Under Classes, you could pick the mode of data classification (I used Natural Breaks) and number of classes (I used 5). Make sure to click the <b>Classify</b> button or your map may disappear.<br>Wondering what the different modes mean? Check out <a href="https://gisgeography.com/choropleth-maps-data-classification/" target="_blank">this link</a>.</li>
                                   <center><img src="img/class.png" width=100% align="middle" ></center>
-                                <li>Click OK to apply the selected style. And you should see an example of the london boroughs map rendered as a choropleth map.</li>
+                                <li>Click OK to apply the selected style. And you should see the london boroughs map rendered as a choropleth map.</li>
                               <center><img src="img/choropleth.png" width=100% align="middle" ></center>
                             <li>Pay attention to the legend of the map, jot down the approximate break numbers, we will need these values later when adding the data to the web map. For example, I take notes of the four integer values of <i>32, 53, 87, 139</i> for later use.</li> </ul>
                               </li>
