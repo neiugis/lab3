@@ -10,8 +10,8 @@
          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
            crossorigin=""></script>
-		   
-		 <script type="text/javascript" src="data.js"></script>
+        
+        <script type="text/javascript" src="data.js"></script>
 
     </head>
 
@@ -24,14 +24,13 @@
               center: [51.48,-0.07],
               zoom: 10
           });
-
-         L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-           attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+           L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+           attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
            maxZoom: 11,
            minZoom: 5
          }).addTo(map);
-		 
-		 L.geoJson(data).addTo(map);
+            
+           L.geoJson(data).addTo(map);
 
         </script>
    </body>
