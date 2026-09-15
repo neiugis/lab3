@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://guides.github.com/introduction/git-handbook/ -->
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+      <title>Lab 3 - Interactive Choropleth Map </title>
+      <!-- <link rel="icon" type="image/x-icon" href="https://guides.github.com/favicon.ico"> -->
+
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+
+      <link rel="icon" href="brazil.png" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+      <link rel="stylesheet" href="gridism.css">
+      <link rel="stylesheet" href="markdown.css">
+      <link rel="stylesheet" href="octicons.css">
+      <link href="main.css" rel="stylesheet">
+      <link href="pygments.css" rel="stylesheet">
+
+      <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="prism.css" rel="stylesheet" />
+
+      <script type="text/javascript" async="" src="ga.js"></script><script src="jquery.js" type="text/javascript"></script>
+      <script src="snap.svg-min.js" type="text/javascript"></script>
+      <script src="application.js" type="text/javascript"></script>
+
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3769691-29']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+        
+        <style>
+            .code-container {
+            position: relative; /* Allows the button to be positioned inside the container */
+            background-color: #f7f7f8;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: auto; /* Ensures scroll if content exceeds width */
+        }
+
+        /* Style for the pre and code block */
+        .code-container pre {
+            margin: 0;
+            background: none;
+            border: 1px solid #f7f7f8;
+            padding: 0px 0 0 0; /* Add padding to the top for the button */
+            white-space: pre-wrap;  /* Enable line wrapping */
+            word-wrap: break-word;  /* Allow breaking long words */
+            overflow-wrap: break-word; /* Break long words in modern browsers */
+            font-size: 14px;
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+        }
+
+        /* Style for the copy button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #566573;
+            color: #fdfefe;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Tooltip styling */
+        .copy-btn[data-tooltip]::after {
+            content: attr(data-tooltip); /* Display the tooltip text */
+            position: absolute;
+            bottom: 125%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333; /* Dark background for the tooltip */
+            color: #fff; /* White text color */
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Show the tooltip on hover */
+        .copy-btn:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Icon inside the button */
+        .copy-btn i {
+            margin-right: 5px; /* Space between the icon and text */
+        }
+
+        /* Change background color when hovering over the button */
+        .copy-btn:hover {
+            background-color: #566573;
+        }
+        
+        </style>
+
+    </head>
+
+    <body style="background-color:#7D6608">
+
+        <article class="full">
+            <div class="article-heading js-article-heading js-geopattern" style="background-color:#7D6608">
+                <div class="wrap">
+                  
+                   <h1>Lab 3. Interactive Choropleth Map   <i class="fa fa-leaf"></i></h1> 
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Monday, 10/5</b></h3>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="toc-wrapper"><ol class="toc js-toc sticky"></ol></div>
+
+                <div class="markdown-body content-body">
+
+
+                  <p><a id="overview" title="Overview" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Overview</h3>
+                  <p><i class="fa fa-spinner fa-spin"></i>  In this lab, we will create an interactive <a href="https://en.wikipedia.org/wiki/Choropleth_map" target="_blank">choropleth map</a> using GeoJSON data. We will add mouseover effects and display attribute information as popups/tooltips. Scroll down to the <a href="#final">bottom</a> for an example.</p>
+                    <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section. </p>
+
+
+
+                  <p><a id="prep" title="Set Up Basemap" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Set Up Basemap</h3>
+                  <ul>
+                         <li>Before start, create a <b>new file folder</b> (e.g., lab3) for saving the html document and associated data file.</li>
+
+                          <li>Open your <b>code editor</b> and add the following lines to set up the basemap using the Carto light canvas.<br> 
+                         
+
+                                 <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Lab 3&lt;/title&gt;
+
+        &nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.css&quot;
+        &nbsp;&nbsp;&nbsp;integrity=&quot;sha256&#45;p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=&quot;
+        &nbsp;&nbsp;&nbsp;crossorigin=&quot;&quot;/&gt;
+
+        &nbsp;&lt;script&nbsp;src=&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.js&quot;
+        &nbsp;&nbsp;&nbsp;integrity=&quot;sha256&#45;20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=&quot;
+        &nbsp;&nbsp;&nbsp;crossorigin=&quot;&quot;&gt;&lt;/script&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id=&quot;map&quot; style=&quot;height: 500px&quot;&gt;&lt;/div&gt;
+
+        &lt;script type=&quot;text/javascript&quot;&gt;
+
+          var map = L.map('map', {
+              center: [51.48,-0.07],
+              zoom: 10
+          });
+
+           L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+           attribution: 'Tiles &amp;copy; Esri &amp;mdash; Esri, DeLorme, NAVTEQ',
+           maxZoom: 11,
+           minZoom: 5
+         }).addTo(map);
+
+        &lt;/script&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></li>
+           <li>Then, save the document as <code>map3.html</code> in your lab 3 folder. Please remember to specify the file extension as <b>.html</b> to make it work. Your map should look like:<br></li>
+
+            <iframe src="map/basemap.html" width=100% height=520 frameborder=0></iframe><br>
+            <p>We will map London as an example this time! </p>
+                       </ul>
+
+
+
+                <p><a id="geojson" title="Prepare and Add GeoJSON Layer" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Prepare and Add the GeoJSON Layer</h3>
+                    <p>In Lab 2, we have introduced a way to add markers manually using their coordinates. But you may wish to work with more complex spatial features as in a desktop GIS. So we introduce GeoJSON, which is a format for encoding a variety of geographic data structures (<a href="https://geojson.org" target="_blank">https://geojson.org</a>).</p>
+                     <ul>
+
+                        <li style="font-weight:bold;color:red;"> Getting Data: click <a href="https://drive.google.com/file/d/11do4G0BRo04RMcAlQZwIVibslsEU37pV/view?usp=sharing" target="_blank">here</a> to download the sample shapefile I am using for the demonstration. </li>
+                        <li>Extract the zipped data folder to your desired directory.</li>
+
+                            <li>Launch <strong>QGIS Desktop</strong>. If you have not installed QGIS, click <a href="https://www.qgis.org/download/" target=_blank>here</a> to download and install it on your own computer.
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span> Please download the <b>Long Term Release (3.44 LTR)</b>, not the latest release. The menus and the screenshots in this lab follow version 3.x. The newest version organizes some menus differently, and the steps below may not match what you see.</li></ul></li>
+
+                            <li>In QGIS, go to <b>Layer (top menu bar) &gt; Add Layer &gt; Add Vector Layer</b> to open the Data Source Manager (see image below). </li>
+                         <li>Under <b>Source</b>, for <b>Vector Dataset(s)</b>, browse to the directory where you have extracted the shapefile and select the <b>london_borough.shp</b> file and click Add to open it in QGIS. Then Close the Add Layer window.</li>
+							<img src="img/addlayer.png" width=100% align="middle" >
+                           <li>The spatial units (polygons) of this layer are the boroughs in the greater London area.</li>
+
+                            <li>In the Layers Pane, right-click the london_borough layer, select <b>Open Attribute Table</b>. The shapefile contains three fields/attributes: <b>NAME, pop_den (population density in <i>people per hectare</i> 2011), and per_indian (percent Indian population 2011)</b>. Close the attribute table.</li>
+
+                              <li>Although we will be mapping the data on the web eventually, it is helpful to first explore the data in QGIS to help determine the details for rendering the data on the web. Right-click the layer again and select <b>Properties</b>, then click the <b>Symbology</b> tab (see image below).
+                                <ul>
+                                <li>Use <b>Graduated</b> to render the data (this option is used when making choropleth maps).</li>
+                                <li>For Value, use the drop-down button to choose the attribute you are intended to map, <code>pop_den</code> in my example.</li>
+                                <li>Under Classes, you could pick the mode of data classification (I used Natural Breaks) and number of classes (I used 5). Make sure to click the <b>Classify</b> button or your map may disappear.<br>Wondering what the different modes mean? Check out <a href="https://gisgeography.com/choropleth-maps-data-classification/" target="_blank">this link</a>.</li>
+                                  <center><img src="img/class.png" width=100% align="middle" ></center>
+                                <li>Click OK to apply the selected style. And you should see the london boroughs map rendered as a choropleth map.</li>
+                              <center><img src="img/choropleth.png" width=100% align="middle" ></center>
+                            <li>Pay attention to the legend of the map, jot down the approximate break numbers, we will need these values later when adding the data to the web map. For example, I take notes of the four integer values of <i>32, 53, 87, 139</i> for later use.</li> </ul>
+                              </li>
+
+
+                              <br>
+                              <li>To maximize the rendering speed, there are two imporant steps we should always perform in QGIS before exporting a shapefile (polygons) to GeoJSON: (1) <span style="color:#C0392B; font-weight:bold">simplify geometry</span>; and (2) <span style="color:#C0392B  ; font-weight:bold">delete unwanted fields in the attribute table</span>. I will show you how to do so in the following steps: <br>
+                                <ul>
+                                    <li> <span style="color:#C0392B; font-weight:bold">Simplify geometry</span><ul>
+                                        <li>In QGIS, go to <b>Vector &gt; Geometry Tools &gt; Simplify</b>, use london_borough as the Input layer (see image below).</li>
+                                        <li>For <b>Simplification method</b>, we will use the default Distance based algorithm, which removes vertices if the length of the tentative simplified line is smaller than the specified tolerance. </li>
+                                        <li>For <b> Tolerance</b>, I used 2 meters. Basically, higher tolerance values would generate simpler features (smaller file size) but also lose some details. For your own map, you may want to consider the map scale and experiment a few options to determine the "best" tolerance value.</li>
+                                        <li>For <b>Simplified</b> results, we will leave it to Create temporary layer as we will export the temporary layer to a geojson file shortly.</li>
+                                      <center><img src="img/simplify2.png" width=100% align="middle" ></center>
+                                        <li>Click Run to start the simplification. Once the processing is complete, return to the main QGIS window to examine the Simplified results and make sure your results don't lose too much details. If necessary, repeat the Simplification process with a smaller tolerance.
+
+                                    </li>
+
+                                    <li><span style="color:#C0392B  ; font-weight:bold">Delete unwanted fields</span>
+                                    <br>You could delete fields of a layer within its attribute table (right-click the <b>Simplified </b>layer in the Layers Pane and select <b>Open Attribute Table</b>. <b>Turn on editing mode</b> within the table using the <b>Toggle editing mode</b> button (Ctrl+E) <img src="img/button.png" align="bottom">. Then click the <b>Delete field</b> button <img src="img/button2.png" align="bottom"> and select the fields you want to delete and click OK. I want to map population density here so I will delete the per_indian field.
+                                    <br>Click the the <b>Toggle editing mode</b> button (Ctrl+E) <img src="img/button.png" align="bottom"> again and click <b>Save</b> to confirm your changes. Close the attribute table.</li>
+                                </ul>
+
+                        </li>
+
+
+                        <li>Now we are ready to export the layer. Right-click the <b>Simplified </b> layer in the Layers Pane and select <b>Export > Save Features As...</b>. In the Save Vector Layer as dialog window (see image below), set Format to <b>GeoJSON</b>, click Browse to save output file to your lab folder (any name you like), and set the CRS to <strong>EPSG:4326 - WGS 84</strong>!!! (see image below)
+                           <ul class="fa-ul">
+                               <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span> Note that Leaflet expects all shape data to be specified in latitude and longitude using <code>EPSG:4326 - WGS 84</code>. If your map data do not show up, I would double check if the correct coordinate system was selected.</li></ul> 
+                            <center><img src="img/qgis.png" width=90% ></center></li>
+                            <li>Click OK to save the GeoJSON file. </li>
+                                <li>Exit QGIS (no need to save the current project).</li>
+                        <li>Use your <b>code editor</b> to open the GeoJSON data file, i.e., london.geojson (In the code editor, select File > Open). Place the following at the very beginning of the GeoJSON document (see image below):
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var data = </code></pre></div></li>
+                          <center>  <img src="img/geojson.png" width=100% ></center>
+                         <li>Save the changed GeoJSON as <code><b>data.js</b></code> to <b> the folder where your html file is saved</b>. Note the file extension is <code>.js</code>.
+                             <br>Here is a copy of the <a href="map/data.js" target="_blank">(data.js)</a> file I created.</li>
+                        <li>Return to your map HTML document. In the <code>head</code> section, following the leaflet css and JS libraries, include the following line so that we could use the <code>data.js</code> data in our map. <br>
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span> Since the data.js file is located in the same folder as the map HTML file, we can reference it by its file name alone.</li></ul>
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+&lt;script type="text/javascript" src=<span style="color:#cc6600">"data.js"</span>&gt;&lt;/script&gt;</code></pre></div></li>
+                        <li>Next, in the <code>script</code> section (inside <code>body</code>), include the following line to add the data (AFTER adding the tile layer). 
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fa-solid fa-triangle-exclamation fa-fade"></i></span>  We place the GeoJSON layer after the tile layer to ensure it is displayed on top. If your layer isn't showing up, double-check the order in which the layers are added.</li></ul>
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+L.geoJson(data).addTo(map);</code></pre></div>
+                        The GeoJSON data layer is now added to the map! Take a look at the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/geojsondata.html" target="_blank">sample code</a> if needed.
+                      <iframe src="map/geojsondata.html" height=570 width=100% frameborder=0></iframe></li>
+                    </ul>
+
+
+
+                  <p><a id="color" title="Add Colors" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Colors</h3>
+                     <ul>
+                        <li>Now, we will color the London boroughs by their population density values, <i>e.g., darker color for higher density and lighter color for lower density</i>. Recall the population density data will come from the <code>pop_den</code> attribute/property of the data. </li>
+                        <li>For choosing colors, I recommend <a href="https://colorbrewer2.org/" target="_blank">ColorBrewer</a> by Dr. Cynthia Brewer, where you can pick a color scheme and get the correponing HTML color codes directly. I will use the 5-class Purples here:<br>
+                            <img src="img/green.png"></li>
+                        <li style="font-weight:bold;color:#C0392B;">Before you choose a scheme, check the <b>colorblind safe</b> box in the ColorBrewer panel.
+                            <ul style="font-weight:normal;color:black;">
+                                <li>This limits the list to schemes that stay readable for people with common forms of color vision deficiency. About one in twelve men and one in two hundred women see color differently, so this is not a rare case.</li>
+                                <li>The 5-class Purples scheme used above is one of the colorblind-safe options. Your deliverable map must also use a colorblind-safe scheme. We will talk about why this matters in the class session on color, symbology, and accessibility.</li>
+                            </ul></li>
+
+                        <li>Once we have the color codes, we need to create a <b>javascript function</b> (we call it <code>getColor</code>) that returns a color based on attribute values, i.e., <code>pop_den</code>. 
+                            <ul><li>We will define multiple JS functions in this lab for adding styles and interaction to the geojson layer. For the purpose of this class, you will only need to modify the functions to fit your own data. But if you would like to learn more about JS functions, check out this <a href="https://www.w3schools.com/js/js_functions.asp" target="_blank"><b>w3schools tutorial</b></a>.</li></ul>
+                            <br>Place the following lines to define the function BEFORE adding the GeoJSON data (<b>ABOVE</b> the line of <code>L.geoJson</code>):
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function getColor(value) {
+    return value > 139 ? '#54278f':
+           value > 87  ? '#756bb1':
+           value > 53  ? '#9e9ac8':
+           value > 32  ? '#cbc9e2':
+                         '#f2f0f7';
+}
+</code></pre></div>
+              In the above lines, the numbers (<i>e.g., 32, 53, 87, 139</i>) are the <b>break values</b> used to classify the population density (people/hectare) of the London boroughs. Recall that I used <code>Natural Breaks</code> as the classification mode in <code>5 classes</code>.
+              <br><br>For your own data, you may use QGIS to help determine the break values.
+              <br><br>
+              Let's take a close look at the function: if the value (population density) is <b>greater than 139</b> people/hectare, the darkest purple (<code>#54278f</code>) will be used. If the value is <b>less than 139 but greater than 87</b>, use the second dark purple (<code>#756bb1</code>), and so forth. The <b>question mark <code>?</code></b> and <b>colon <code>:</code></b> are used together to create a conditional statement (We will talk about this next week).
+              <br><br>It is okay if you cannot fully understand this. For your own data, you will simply need to replace the <b>break values</b> and <b>colors</b>. You may add or remove classes. Just make sure to follow the structure.</li>
+
+              <li>Note: defining the functions won't add/change anything to the map until the functions are used for adding the layers through Leaflet functions.</li>
+
+                        <li>Following the <code>getColor</code> function, we define another function called <code>style</code> for the GeoJSON layer to fill the boroughs with colors based on the population density attribute:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: 'gray',
+        fillOpacity: 0.9
+    };
+}</code></pre></div>Note <span style="color:#990099">pop_den</span> is the field name for the population density values. You will need to use the corresponding field name when mapping your own data. Letter case matters.
+                            
+                            <br><br>For the function options, you may be able to tell what they do by their names, e.g., <code>fillColor</code> is to define the fill color of the features using the <code>getColor</code> function, <code>weight</code> is to define the weight of the boundary lines, etc. You may try to customize the appearance by adjusting the corresponding values. 
+<br><br>Leaflet actually offers other options for customizing vector styles, click <a href="https://leafletjs.com/reference.html#path" target="_blank"><b>here</b></a> to find out more. <span style="color: red">Note for the deliverables, you will need to use <b>dashed line (<i>the dashArray option</i>)</b> for the polygon boundaries. <a href="https://leafletjs.com/examples/choropleth/" target="_blank">This tutorial</a> offers an example of how to implement the dashArray option.</span></li>
+
+                        <li>To use the functions we just defined, we need to <b>MODIFY</b> the line of <code>L.geoJson</code> to:
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+L.geoJson(data, {
+   style:style
+}).addTo(map);</code></pre></div>Please make sure the getColor and style functions are defined above <code>L.geoJson</code>.<br><br>
+                        Now we have a map with colors (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/color.html" target="_blank">sample code</a>) !
+                        <iframe src="map/color.html" width=95% height=570 frameborder=0></iframe></li>
+                    </ul>
+
+
+
+
+                    <p><a id="legend" title="Add Legend" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Legend</h3>
+
+                    <ul>
+                          <li>Next, we will add legend to the map (an essential component of all maps). In the <code>head</code> section of your html document, place the following lines to define the appearance of the legend (read the comment lines for explanations). You don't have to change anything with your own data if you are happy about the legend styles.
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+&lt;style&gt;
+  /* Optional: adjust the values below to change the appearance of the legend */
+  .legend {
+      padding: 6px 8px;
+      line-height: 18px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+  }
+
+   /* Optional: adjust the values below to change the appearance of the legend color boxes */
+   .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+  }
+&lt;/style&gt;</code>
+</pre></div></li>
+                    <li>Next, in the <code>script</code> section INSIDE <code>body</code>, add the following lines AFTER <code>L.geoJson</code> to define how the legend will be created in your map (see the comment lines for explanation). 
+                        <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'legend'),
+        grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = '&lt;b&gt;Population Density &lt;br&gt; 2011 &lt;br&gt;&lt;/b&gt;'; // The legend title (HTML-based), in this case it's Population Density 2011
+
+    // Loop through our the classes and generate a label with a color box for each interval.
+    // If you are creating a choropleth map, you DO NOT need to change lines below.
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        '&lt;i style=&quot;background:' + getColor(grades[i] + 1) + '&quot;&gt;&lt;/i&gt;' +
+        grades[i] + (grades[i + 1] ? '&amp;ndash;' + grades[i + 1] + '&lt;br&gt;' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);</code></pre></div>
+                        The above functions for defining the legend may be too much for you to understand. But you can <b>simply replace some small portions according to the comment lines when mapping your own data</b>.
+                        <br><br>
+                        The legend will be created at the bottom right corner of your map with the defined styles and content (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/choropleth.html" target="_blank">sample code</a>):
+                          <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
+                        Now we have the choropleth map and legend created, not bad. However, it would be better to add more interactions to make the most of web-based mapping.
+                    </li>
+                </ul>
+                <br>
+
+
+                    
+                <p><a id="interaction" title="Add Mouseover Effects" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Mouseover Effects</h3>
+                    <p>Let's make the boroughs <b>highlighted visually when they are hovered with a mouse</b>.</p>
+                    <ul>
+                      <li>We will first define a function for the mouseover effect, call it <code>highlightFeature</code>. Place the following lines BEFORE adding the geojson. Please read the comment lines for explanations. 
+                          <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function highlightFeature(e) {
+    // Get access to the feature that was hovered through e.target
+    var feature = e.target;
+
+    // Set a thick grey border on the feature as mouseover effect
+    // Adjust the values below to change the highlighting styles of features on mouseover
+    // Check out https://leafletjs.com/reference.html#path for more options for changing style
+    feature.setStyle({
+        weight: 5,
+        color: '#666',
+        fillOpacity: 0.7
+    });
+
+    // Bring the highlighted feature to front so that the border doesn’t clash with nearby states
+    // But not for IE, Opera or Edge, since they have problems doing bringToFront on mouseover
+    if (!L.Browser.ie &amp;&amp; !L.Browser.opera &amp;&amp; !L.Browser.edge) {
+        feature.bringToFront();
+    }
+}</code></pre></div>
+                        </li>
+                        <li>Next, we will define another function to reset the feature to its original style on mouseout. Place the following lines AFTER the <code>highlightFeature</code> function. 
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+var geojson; // define a variable to make the geojson layer accessible for the funtion to use   
+            
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}</code></pre></div></li>
+                        <li>Now, we are ready to apply the two functions as the layer's mouseover and mouseout effects. Following the two functions, add another function to apply the effects on mouseover and mouseout.
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature, // Do what defined by the highlightFeature function on mouseover
+        mouseout: resetHighlight,    // Do what defined by the resetHighlight function on mouseout
+    });
+}</code></pre></div>
+                        </li>
+                        <li>Next, <b>MODIFY</b> the <code>L.geoJson</code> line to the following:
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+geojson = L.geoJson(data, {
+    style: style,
+    onEachFeature: onEachFeature
+}).addTo(map);</code></pre></div>
+                            Note we have assigned the geojson layer to the <code>geojson</code> variable defined earlier. And the <code>onEachFeature</code> option is use to apply the mouse effects to the geojson layer. 
+                            <br>You map should have the mouseover effects added: (<a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/mouseover.html" target="_blank">sample code</a>)
+                        </li>
+                        <iframe src="map/mouseover.html" width=95% height=570 frameborder=0></iframe>
+                    </ul>
+                    
+                    
+                    
+                  <p><a id="tooltip" title="Add Tooltips" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Add Tooltips</h3>
+                    <p>To finalize the map, we will add popup/tooltip to each borough with specific attribute information, <i>e.g., borough name and population density</i>.</p>
+                    <ul>
+                        <li>The <code>bindPopup</code> method we have introduced in Lab 2 can also be used for a geojson layer. <b>MODIFY</b> the <code>L.geoJson</code> part to the following:
+                            <div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                                <pre><code class="language-js">
+geojson = L.geoJson(data, {
+    style:style,
+    onEachFeature: onEachFeature
+}).bindPopup(function (layer){
+    return layer.feature.properties.NAME 
+           + '&lt;p style=&quot;color:purple&quot;&gt;' + layer.feature.properties.pop_den.toString() + ' people/hectare &lt;/p&gt;';       
+}).addTo(map);</code></pre></div>
+                        Again, only text/strings are acceptable as popup content. Note how we are using HTML to format the popup information. <code>layer.feature.properties.NAME</code> returns the NAME attribute of the layer (name of boroughs) and <code>layer.feature.properties.pop_den.toString()</code> returns and converts the population density (numeric values) to <b>strings</b> so that it can be displayed properly in the popups. </li>
+                        
+                        <li>Leaflet also allows adding <b>tooltips</b> when you mouseover a feature. Basically, you could do this by simply replacing the method name of <code>bindPopup</code> above to <code>bindTooltip</code>. An example of the tooltip result is shown below (see the <a href="https://raw.githubusercontent.com/neiugis/lab3/gh-pages/map/tooltip.html" target="_blank">sample code</a> if needed):
+                        <iframe id="final" src="map/tooltip.html" width=95% height=570 frameborder=0></iframe></li>
+                    
+                    </ul>
+                    
+
+                  <p><a id="deliverable" title="Deliverables" class="toc-item"></a></p>
+                  <h3><i class="fa fa-paint-brush"></i> Deliverables</h3>
+                    <ul>
+                        <li>Download and extract
+                        <a href="https://drive.google.com/file/d/1MbQUC7dj6JPT4AdkmOzm1_ZXBFihxo2x/view?usp=sharing" target="_blank">this Chicago Community Area shapefile</a>. You may also use your own data instead. Your own data must be polygons with a numeric attribute to map. The meanings of the attributes are explained in
+                        <a href="https://drive.google.com/file/d/1k_DGUsxOvsJvEblsgVSoyW3ruZKBhuEr/view" target="_blank">the TXT file</a>, and you may choose one field to map.</li>
+                        <li>Prepare the data in QGIS and create an <mark>interactive choropleth map with a legend</mark>. Your map needs to have:
+                        <ul>
+                            <li>a <mark>colorblind-safe color scheme</mark> from ColorBrewer,</li>
+                            <li><mark>dashed lines</mark> for the polygon boundaries,</li>
+                            <li>each feature highlighted with a <mark>thick white border on mouseover</mark>, and</li>
+                            <li><mark>tooltips</mark> that display the attribute information being mapped. Include the name or label of the feature and the measurement unit, if one applies.</li></ul></li>
+                        <li>Host your web page via GitHub. Rename the html file as <code>index.html</code> and upload the data file (<code>data.js</code>) to the repository. Then submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/user/folder_submit_files.d2l?db=285630&grpid=0&isprv=0&bp=0&ou=3048274" target="_blank">D2L</a>.</li>
+                    </ul>
+
+                    <h4><i class="fa fa-paint-brush"></i> Grading (50 points)</h4>
+                    <table style="border-collapse:collapse; width:95%; margin-bottom:20px;">
+                        <thead>
+                            <tr style="background-color:#f7f7f8;">
+                                <th style="border:1px solid #d1d5db; padding:8px; text-align:left;">What is graded</th>
+                                <th style="border:1px solid #d1d5db; padding:8px; text-align:center; width:90px;">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">Data preparation. The geometry is simplified, unneeded fields are removed, the layer is exported as GeoJSON in EPSG:4326, and the data loads in the map as <code>data.js</code>.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">14</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">Choropleth map and legend. Features are colored by one numeric attribute using break values that suit the data. The legend title, classes, and units are clear and match the map.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">12</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">A colorblind-safe color scheme from ColorBrewer.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">4</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">Dashed lines for the polygon boundaries.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">6</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">A thick white border on mouseover.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">6</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d1d5db; padding:8px;">Tooltips with the mapped value, the feature name, and the measurement unit.</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">8</td>
+                            </tr>
+                            <tr style="background-color:#f7f7f8; font-weight:bold;">
+                                <td style="border:1px solid #d1d5db; padding:8px;">Total</td>
+                                <td style="border:1px solid #d1d5db; padding:8px; text-align:center;">50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <ul>
+                        <li><i>Going Further:</i> If you would like to explore alternative ways of displaying the attribute information, this <a href="https://leafletjs.com/examples/choropleth/" target="_blank">Leaflet Tutorial</a> introduces how to display information on a custom control pane.</li>
+                    </ul>
+
+            <br><br>
+                                  
+      
+           
+            </div>
+                    </div>
+                    </article>
+
+          <footer>
+            <div class="wrap">
+
+              <p>Copyright &copy; Ting Liu 2026</p>
+            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="https://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+            </div>
+          </footer>
+
+            <script src="prism.js"></script>
+            
+               <script>
+            function copyToClipboard(button) {
+                // Find the code block within the same container as the button
+                const codeContainer = button.closest('.code-container');
+                const codeText = codeContainer.querySelector('pre code').innerText;
+
+                // Copy the code text to the clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Change the button text to "Copied!" on success
+                    button.innerHTML = ' <i class="fa-solid fa-check"></i> <strong>Copied!</strong>';
+                    button.style.backgroundColor = '#6cbf43'; // Green background for success
+
+                    // Reset the button text and background color after 2 seconds
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fa-regular fa-copy"></i> <strong>Copy code</strong>';
+                        button.style.backgroundColor = '#566573'; // Reset to original color
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+            </script>
+
+     </body>
+</html>
